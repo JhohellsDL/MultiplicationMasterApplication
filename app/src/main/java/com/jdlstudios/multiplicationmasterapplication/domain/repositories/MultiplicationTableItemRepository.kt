@@ -1,0 +1,4 @@
+package com.jdlstudios.multiplicationmasterapplication.domain.repositories
+
+class MultiplicationTableItemRepository {
+}
