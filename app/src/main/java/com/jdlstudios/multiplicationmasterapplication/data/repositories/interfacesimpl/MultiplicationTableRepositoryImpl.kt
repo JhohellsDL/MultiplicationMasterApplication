@@ -1,8 +1,8 @@
-package com.jdlstudios.multiplicationmasterapplication.data.repositoriesimpl
+package com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl
 
 import com.jdlstudios.multiplicationmasterapplication.data.cache.dao.MultiplicationTableCacheDao
 import com.jdlstudios.multiplicationmasterapplication.data.models.MultiplicationTable
-import com.jdlstudios.multiplicationmasterapplication.data.repositories.MultiplicationTableRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.MultiplicationTableRepository
 import com.jdlstudios.multiplicationmasterapplication.data.sources.MultiplicationTableDataSource
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_sessionHistoryFragment"
+            app:destination="@id/sessionHistoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_configurationExercisesFragment"
+            app:destination="@id/configurationExercisesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configurationExercisesFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.ConfigurationExercisesFragment"
+        android:label="fragment_configuration_exercises"
+        tools:layout="@layout/fragment_configuration_exercises" >
+        <action
+            android:id="@+id/action_configurationExercisesFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sessionHistoryFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.SessionHistoryFragment"
+        android:label="fragment_session_history"
+        tools:layout="@layout/fragment_session_history" />
+    <fragment
+        android:id="@+id/exercisesFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.ExercisesFragment"
+        android:label="fragment_exercises"
+        tools:layout="@layout/fragment_exercises" >
+        <action
+            android:id="@+id/action_exercisesFragment_to_feedbackFragment"
+            app:destination="@id/feedbackFragment" />
+        <argument
+            android:name="quantity"
+            app:argType="integer" />
+        <argument
+            android:name="difficulty"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedbackFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.FeedbackFragment"
+        android:label="fragment_feedback"
+        tools:layout="@layout/fragment_feedback" />
+</navigation>

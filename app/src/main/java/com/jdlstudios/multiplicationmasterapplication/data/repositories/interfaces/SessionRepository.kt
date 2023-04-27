@@ -1,4 +1,4 @@
-package com.jdlstudios.multiplicationmasterapplication.data.repositories
+package com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces
 
 import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 

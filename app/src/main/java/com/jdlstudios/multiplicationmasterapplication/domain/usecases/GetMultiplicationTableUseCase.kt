@@ -1,7 +1,7 @@
 package com.jdlstudios.multiplicationmasterapplication.domain.usecases
 
 import com.jdlstudios.multiplicationmasterapplication.data.models.MultiplicationTable
-import com.jdlstudios.multiplicationmasterapplication.data.repositories.MultiplicationTableRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.MultiplicationTableRepository
 
 class GetMultiplicationTableUseCase(
     private val repository: MultiplicationTableRepository

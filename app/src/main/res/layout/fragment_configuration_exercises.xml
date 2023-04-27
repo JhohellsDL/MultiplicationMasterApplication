@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.screens.ConfigurationExercisesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona el nivel de dificultad"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/difficulty_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp">
+
+            <RadioButton
+                android:id="@+id/easy_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fácil"
+                android:tag="EASY"/>
+
+            <RadioButton
+                android:id="@+id/medium_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Intermedio"
+                android:tag="INTERMEDIATE"/>
+
+            <RadioButton
+                android:id="@+id/hard_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Desafio"
+                android:tag="CHALLENGING"/>
+
+            <RadioButton
+                android:id="@+id/expert_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Avanzado"
+                android:tag="ADVANCED"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona la cantidad de ejercicios"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"/>
+
+        <SeekBar
+            android:id="@+id/seekbar_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="20"
+            android:progress="10" />
+
+        <TextView
+            android:id="@+id/selected_exercise_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textSize="18sp"
+            android:paddingTop="8dp"/>
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comenzar" />
+
+    </LinearLayout>
+
+
+</layout>

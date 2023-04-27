@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.screens.ExercisesFragment">
+
+    <LinearLayout
+        android:id="@+id/exercise_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/difficulty_exercises_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            tools:text="Intermediate"/>
+        <TextView
+            android:id="@+id/quantity_exercises_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            tools:text="23"/>
+
+        <TextView
+            android:id="@+id/quantity_exercises_remaining_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            tools:text="23"/>
+
+        <TextView
+            android:id="@+id/exercise_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="99 X 99"/>
+
+        <EditText
+            android:id="@+id/answer_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Ingresa tu respuesta"/>
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar"/>
+
+        <TextView
+            android:id="@+id/feedback_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            tools:text="Correcto!"
+            android:textStyle="italic"
+            android:paddingTop="16dp"/>
+
+    </LinearLayout>
+
+</layout>

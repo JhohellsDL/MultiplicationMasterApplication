@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.screens.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido a Multiplicar App!"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aprende a multiplicar de manera divertida"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"/>
+
+        <Button
+            android:id="@+id/practice_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Practicar"/>
+
+        <Button
+            android:id="@+id/history_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver historial"/>
+
+    </LinearLayout>
+
+
+</layout>

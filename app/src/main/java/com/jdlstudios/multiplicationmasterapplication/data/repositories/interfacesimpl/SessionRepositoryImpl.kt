@@ -1,7 +1,7 @@
-package com.jdlstudios.multiplicationmasterapplication.data.repositoriesimpl
+package com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl
 
 import com.jdlstudios.multiplicationmasterapplication.data.models.Session
-import com.jdlstudios.multiplicationmasterapplication.data.repositories.SessionRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.SessionRepository
 import com.jdlstudios.multiplicationmasterapplication.data.sources.SessionDataSource
 
 class SessionRepositoryImpl(

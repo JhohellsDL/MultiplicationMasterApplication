@@ -1,6 +1,6 @@
 package com.jdlstudios.multiplicationmasterapplication.domain.usecases
 
-import com.jdlstudios.multiplicationmasterapplication.data.repositories.ExerciseRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.ExerciseRepository
 
 class VerifyExerciseAnswerUseCase(
     private val exerciseRepository: ExerciseRepository
