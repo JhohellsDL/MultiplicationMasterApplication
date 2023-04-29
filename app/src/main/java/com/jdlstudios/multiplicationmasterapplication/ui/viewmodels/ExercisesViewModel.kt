@@ -12,9 +12,9 @@ import com.jdlstudios.multiplicationmasterapplication.ui.models.toUIModel
 
 class ExercisesViewModel : ViewModel() {
 
-    private val _exercise = MutableLiveData<ExerciseUIModel>()
+    /*private val _exercise = MutableLiveData<ExerciseUIModel>()
     val exercise: LiveData<ExerciseUIModel>
-        get() = _exercise
+        get() = _exercise*/
 
     private val _totalExercises = MutableLiveData<Int>()
     val totalExercises: LiveData<Int>
@@ -26,16 +26,22 @@ class ExercisesViewModel : ViewModel() {
     val listExercises: LiveData<List<ExerciseUIModel>>
         get() = _listExercises
 
+    private val _list = MutableLiveData<List<String>>()
+    val list: LiveData<List<String>> = _list
+
+    private val _selectedPosition = MutableLiveData<Int>()
+    val selectedPosition: LiveData<Int> = _selectedPosition
+
     private val generateExerciseUseCase: GenerateExerciseUseCase = GenerateExerciseUseCase()
     private val generateListExercisesUseCase: GenerateListExercisesUseCase =
         GenerateListExercisesUseCase()
 
     //----------------------------------------------------------------------------------------------
-    fun setExercise(difficulty: Difficulty, quantity: Int) {
+    /*fun setExercise(difficulty: Difficulty, quantity: Int) {
         val exercise = generateExerciseUseCase.generateExercise(difficulty)
         _exercise.value = exercise.toUIModel()
         //totalExercises = quantity
-    }
+    }*/
 
     fun setListExercises(difficulty: Difficulty, quantity: Int) {
         val list: List<ExerciseUIModel> =
@@ -44,15 +50,35 @@ class ExercisesViewModel : ViewModel() {
             }
         _listExercises.value = list
         _totalExercises.value = list.size
+        _selectedPosition.value = 0 // Inicialmente seleccionamos el primer elemento
     }
 
-    fun setValueCorrect(value: Boolean): ExerciseUIModel {
+    fun nextItem() {
+        val currentPos = _selectedPosition.value ?: 0
+        if (currentPos < (listExercises.value?.size?.minus(1) ?: 0)) {
+            _selectedPosition.value = currentPos + 1
+            Log.i("sum", "pos_: $currentPos -- ${_selectedPosition.value}")
+        }
+    }
+
+    fun previousItem() {
+        val currentPos = _selectedPosition.value ?: 0
+        if (currentPos > 0) {
+            _selectedPosition.value = currentPos - 1
+        }
+    }
+    /*fun setValueCorrect(value: Boolean): ExerciseUIModel {
         val exercise = _exercise.value
         exercise?.correct = value
         return exercise!!
+    }*/
+
+    fun checkAnswer(answer: Int, exercise: ExerciseUIModel): Boolean{
+        val answerExercise = exercise.answer
+        return answer == answerExercise
     }
 
-    fun checkAnswer(answer: Int): Boolean {
+    /*fun checkAnswer(answer: Int): Boolean {
         val answerExercise = exercise.value?.answer
         Log.i("sum", "$answerExercise = $answer")
         return if (answer == answerExercise) {
@@ -61,11 +87,11 @@ class ExercisesViewModel : ViewModel() {
         } else {
             false
         }
-    }
+    }*/
 
-    fun getResultExercise(): ExerciseUIModel? {
+    /*fun getResultExercise(): ExerciseUIModel? {
         return exercise.value
-    }
+    }*/
 
 
 

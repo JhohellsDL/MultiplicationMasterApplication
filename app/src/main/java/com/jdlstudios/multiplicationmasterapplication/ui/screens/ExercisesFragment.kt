@@ -12,12 +12,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
+import com.jdlstudios.multiplicationmasterapplication.ui.models.ExerciseUIModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
 
 class ExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentExercisesBinding
     private val exercisesViewModel: ExercisesViewModel by viewModels()
+    private var listExercises: List<ExerciseUIModel> = listOf()
+    private var exerciseNew: ExerciseUIModel = ExerciseUIModel(0, 0, 0, false)
+    private var newListExercises: MutableList<ExerciseUIModel> = mutableListOf()
+    private var currentPosition: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +35,14 @@ class ExercisesFragment : Fragment() {
         val quantityExercises = args.quantity
         val difficultyExercises = Difficulty.values().getOrElse(args.difficulty) { Difficulty.EASY }
 
-        updateExerciseView(difficultyExercises, quantityExercises)
+        updateExercisesList(difficultyExercises, quantityExercises)
+
+        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
+            listExercises = it
+        }
+        exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
+            starExercise()
+        }
 
         binding.difficultyExercisesTextview.text = difficultyExercises.name
         binding.quantityExercisesTextview.text = quantityExercises.toString()
@@ -42,23 +54,41 @@ class ExercisesFragment : Fragment() {
                 val isAnswerValid = isAnswerValid(s.toString())
                 binding.submitButton.isEnabled = isAnswerValid
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
         binding.submitButton.setOnClickListener {
             val answer = binding.answerEdittext.text.toString().toInt()
-            val correct = exercisesViewModel.checkAnswer(answer)
-            val resultExercise = exercisesViewModel.getResultExercise()
+            val correct = exercisesViewModel.checkAnswer(answer, exerciseNew)
+            saveExercise(correct)
+
+            exercisesViewModel.nextItem()
+            exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
+                currentPosition = it
+                starExercise()
+            }
+
             exercisesViewModel.completeExercise()
-            binding.quantityExercisesRemainingTextview.text = exercisesViewModel.getRemainingExercises().toString()
+            binding.quantityExercisesRemainingTextview.text =
+                exercisesViewModel.getRemainingExercises().toString()
 
             showUserAnswerResult(correct)
-            updateExerciseView(difficultyExercises, quantityExercises)
 
             binding.answerEdittext.text.clear()
+            Log.i("sum", "ListaNew: $newListExercises")
         }
-
         return binding.root
+    }
+
+    private fun starExercise() {
+        exerciseNew = listExercises[currentPosition]
+        binding.exerciseTextview.text = exerciseNew.toString()
+    }
+
+    private fun saveExercise(correct: Boolean) {
+        exerciseNew.correct = correct
+        newListExercises.add(exerciseNew)
     }
 
     private fun showUserAnswerResult(correct: Boolean) {
@@ -69,15 +99,10 @@ class ExercisesFragment : Fragment() {
         }
     }
 
-
-    private fun updateExerciseView(difficultyExercises: Difficulty, quantity: Int) {
-        exercisesViewModel.setExercise(difficultyExercises, quantity)
+    private fun updateExercisesList(difficultyExercises: Difficulty, quantity: Int) {
         exercisesViewModel.setListExercises(difficultyExercises, quantity)
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner){
-            Log.i("sum","lista_: $it")
-        }
-        exercisesViewModel.exercise.observe(viewLifecycleOwner) {
-            binding.exerciseTextview.text = "${it.factor1} X ${it.factor2} = ${it.answer} -- ${it.correct}"
+        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
+            listExercises = it
         }
     }
 
