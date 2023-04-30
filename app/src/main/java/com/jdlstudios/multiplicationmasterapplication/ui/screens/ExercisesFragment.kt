@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
@@ -19,10 +20,7 @@ class ExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentExercisesBinding
     private val exercisesViewModel: ExercisesViewModel by viewModels()
-    private var listExercises: List<ExerciseUIModel> = listOf()
-    private var exerciseNew: ExerciseUIModel = ExerciseUIModel(0, 0, 0, false)
     private var newListExercises: MutableList<ExerciseUIModel> = mutableListOf()
-    private var currentPosition: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +35,8 @@ class ExercisesFragment : Fragment() {
 
         updateExercisesList(difficultyExercises, quantityExercises)
 
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
-            listExercises = it
-        }
         exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-            starExercise()
+            starExercise(it)
         }
 
         binding.difficultyExercisesTextview.text = difficultyExercises.name
@@ -60,35 +55,56 @@ class ExercisesFragment : Fragment() {
 
         binding.submitButton.setOnClickListener {
             val answer = binding.answerEdittext.text.toString().toInt()
-            val correct = exercisesViewModel.checkAnswer(answer, exerciseNew)
-            saveExercise(correct)
+
+            val correct = exercisesViewModel.exerciseNew.value?.let {
+                exercisesViewModel.checkAnswer(
+                    answer,
+                    it
+                )
+            }
+            correct?.let {
+                saveExercise(it)
+            }
 
             exercisesViewModel.nextItem()
             exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-                currentPosition = it
-                starExercise()
+                starExercise(it)
             }
 
             exercisesViewModel.completeExercise()
+
             binding.quantityExercisesRemainingTextview.text =
                 exercisesViewModel.getRemainingExercises().toString()
 
-            showUserAnswerResult(correct)
+            correct?.let {
+                showUserAnswerResult(it)
+            }
 
             binding.answerEdittext.text.clear()
             Log.i("sum", "ListaNew: $newListExercises")
+            exercisesViewModel.stateFinish.observe(viewLifecycleOwner) {
+                if (it) {
+                    Toast.makeText(requireContext(), "teminaste!", Toast.LENGTH_SHORT).show()
+                    binding.answerEdittext.isEnabled = false
+                }
+            }
         }
         return binding.root
     }
 
-    private fun starExercise() {
-        exerciseNew = listExercises[currentPosition]
-        binding.exerciseTextview.text = exerciseNew.toString()
+    private fun starExercise(currentPosition: Int) {
+        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
+            binding.exerciseTextview.text = it[currentPosition].toString()
+            exercisesViewModel.setExerciseNew(it[currentPosition])
+        }
     }
 
     private fun saveExercise(correct: Boolean) {
-        exerciseNew.correct = correct
-        newListExercises.add(exerciseNew)
+        val exerciseNew = exercisesViewModel.exerciseNew.value
+        if (exerciseNew != null) {
+            exerciseNew.correct = correct
+        }
+        exerciseNew?.let { newListExercises.add(it) }
     }
 
     private fun showUserAnswerResult(correct: Boolean) {
@@ -101,9 +117,6 @@ class ExercisesFragment : Fragment() {
 
     private fun updateExercisesList(difficultyExercises: Difficulty, quantity: Int) {
         exercisesViewModel.setListExercises(difficultyExercises, quantity)
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
-            listExercises = it
-        }
     }
 
     private fun isAnswerValid(answer: String): Boolean {
