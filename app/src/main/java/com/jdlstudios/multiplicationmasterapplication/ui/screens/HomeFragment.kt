@@ -19,10 +19,10 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
 
-        binding.practiceButton.setOnClickListener {
+        binding.buttonPractice.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_configurationExercisesFragment)
         }
-        binding.historyButton.setOnClickListener {
+        binding.buttonHistory.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_sessionHistoryFragment)
         }
 

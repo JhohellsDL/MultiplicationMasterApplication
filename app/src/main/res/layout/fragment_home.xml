@@ -1,44 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.screens.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorEditTextBackground"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="32dp">
+
+        <ImageView
+            android:id="@+id/inicioImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="64dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/text_name_app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido a Multiplicar App!"
+            android:layout_marginTop="32dp"
+            android:text="Bienvenido a MultiMath Trainer!"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inicioImage" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Aprende a multiplicar de manera divertida"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"/>
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Entrena tus habilidades de multiplicación. Elige ejercicios y niveles de dificultad, verifica respuestas y obtén puntajes. ¡Conviértete en un maestro de la multiplicación!"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_name_app" />
 
         <Button
-            android:id="@+id/practice_button"
+            android:id="@+id/button_practice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Practicar"/>
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:elevation="8dp"
+            android:lines="2"
+            android:text="Practicar"
+            android:textColor="@color/colorTextPrimary"
+            app:layout_constraintBottom_toTopOf="@id/button_history"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <Button
-            android:id="@+id/history_button"
+            android:id="@+id/button_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver historial"/>
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/colorButtonNormal"
+            android:lines="2"
+            android:text="Ver Historial"
+            android:textColor="@color/colorTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

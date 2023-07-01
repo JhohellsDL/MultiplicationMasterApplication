@@ -7,4 +7,39 @@
     <color name="accent">#FE805D</color>
     <color name="text">#26344F</color>
     <color name="secondary">#7B8783</color>
+
+    <color name="textTitle">#212121</color>
+    <color name="textBody">#474F60</color>
+
+    <color name="backgroundPrimary">#FFFFFF</color>
+    <color name="backgroundSecondary">#E7F1F9</color>
+
+    <color name="accent1">#FE805D</color>
+    <color name="accent2">#5FC563</color>
+
+
+    <color name="verde1">#00B140</color>
+    <color name="verde2">#7FFF00</color>
+    <color name="verde3">#808000</color>
+    <color name="verde4">#98FF98</color>
+    <color name="verde5">#ADDFAD</color>
+
+
+
+    Fondo principal:
+    <color name="colorPrimary">#00B140</color> (Verde esmeralda)
+    Barra de acción:
+    <color name="colorPrimaryDark">#00642C</color> (Verde oscuro)
+    Texto principal:
+    <color name="colorTextPrimary">#FFFFFF</color> (Blanco)
+    Texto secundario:
+    <color name="colorTextSecondary">#C0C0C0</color> (Gris claro)
+    Botones:
+    <color name="colorButtonNormal">#00B140</color> (Verde esmeralda)
+    <color name="colorButtonPressed">#008A2E</color> (Verde más oscuro cuando se presiona)
+    Fondos de cuadros de texto:
+    <color name="colorEditTextBackground">#F2F2F2</color> (Gris claro)
+    Barras de progreso:
+    <color name="colorProgressBackground">#C0C0C0</color> (Gris claro)
+    <color name="colorProgressBar">#00B140</color> (Verde esmeralda)
 </resources>
