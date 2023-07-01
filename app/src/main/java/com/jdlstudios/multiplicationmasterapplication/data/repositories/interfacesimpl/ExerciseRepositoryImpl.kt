@@ -1,5 +1,7 @@
 package com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl
 
+import com.jdlstudios.multiplicationmasterapplication.data.local.dao.ExerciseDao
+import com.jdlstudios.multiplicationmasterapplication.data.local.dao.SessionDao
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.ExerciseRepository
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.provider.ExerciseProvider
@@ -7,25 +9,27 @@ import com.jdlstudios.multiplicationmasterapplication.data.sources.ExerciseDataS
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 
 class ExerciseRepositoryImpl(
-    private val exerciseDataSource: ExerciseDataSource
+    private val exerciseDao: ExerciseDao
 ) : ExerciseRepository {
 
     override suspend fun saveExercise(exercise: Exercise) {
-        exerciseDataSource.saveExercise(exercise)
+        exerciseDao.insertExercise(exercise = exercise.toExerciseEntity())
     }
 
     override suspend fun getExercisesBySessionId(sessionId: Long): List<Exercise> {
-        return exerciseDataSource.getExercisesBySessionId(sessionId)
+        TODO("Not yet implemented")
     }
 
     override suspend fun uploadExercise(exercise: Exercise) {
-        return exerciseDataSource.uploadExercise(exercise)
+        TODO("Not yet implemented")
     }
 
     override suspend fun getExerciseResult(op1: Int, op2: Int): Int {
-        return op1 * op2
+        TODO("Not yet implemented")
     }
 
-    override fun getExerciseFromProvider(difficulty: Difficulty): Exercise =
-        ExerciseProvider.randomMultiplication(difficulty)
+    override fun getExerciseFromProvider(difficulty: Difficulty): Exercise {
+        TODO("Not yet implemented")
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,8 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
+import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentConfigurationExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
@@ -31,7 +31,7 @@ class ConfigurationExercisesFragment : Fragment() {
         val application = requireNotNull(this.activity).applicationContext
 
         val configurationViewModel: ConfigurationExercisesViewModel by viewModels {
-            ConfigurationExercisesViewModelFactory((application as MultiplicationApplication).repository)
+            ConfigurationExercisesViewModelFactory((application as MultiplicationApplication).sessionRepository)
         }
         //-------------------------------------------------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ class ConfigurationExercisesFragment : Fragment() {
             configurationViewModel.insertSession()
 
             if (getQuantityExercises() > 0) {
-                navigateToExercisesFragment(90)
+                it.findNavController().navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
             } else {
                 Toast.makeText(
                     context,
@@ -65,14 +65,6 @@ class ConfigurationExercisesFragment : Fragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-    }
-
-    private fun navigateToExercisesFragment(sessionId: Long) {
-        findNavController().navigate(
-            ConfigurationExercisesFragmentDirections.actionConfigurationExercisesFragmentToExercisesFragment(
-                sessionId
-            )
-        )
     }
 
     private fun getQuantityExercises() = binding.seekbarQuantity.progress

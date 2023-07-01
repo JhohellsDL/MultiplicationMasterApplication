@@ -2,6 +2,7 @@ package com.jdlstudios.multiplicationmasterapplication
 
 import android.app.Application
 import com.jdlstudios.multiplicationmasterapplication.data.local.AppDatabase
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.ExerciseRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.SessionRepositoryImpl
 
 class MultiplicationApplication : Application() {
@@ -10,7 +11,11 @@ class MultiplicationApplication : Application() {
         AppDatabase.getInstance(this)
     }
 
-    val repository by lazy {
+    val sessionRepository by lazy {
         SessionRepositoryImpl(database.sessionDao())
+    }
+
+    val exerciseRepository by lazy {
+        ExerciseRepositoryImpl(database.exerciseDao())
     }
 }

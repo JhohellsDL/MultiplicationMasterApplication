@@ -8,30 +8,29 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.trace
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
-import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
-import com.jdlstudios.multiplicationmasterapplication.ui.models.ExerciseUIModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class ExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentExercisesBinding
     private var currentSession: SessionEntity? = null
     private var newListExercises: List<Exercise> = mutableListOf()
+
+    private lateinit var exerciseForAdd: Exercise
+    private var sessionId: Long = 0
     private var currentExercise: Exercise? = null
+
     private var numberExercise: Int = 0
+    private var answerUser: Int = 0
+    private var isCorrect: Boolean = false
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
@@ -40,51 +39,63 @@ class ExercisesFragment : Fragment() {
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater)
 
-// Obtener los argumentos enviados desde la pantalla anterior
-        val args: ExercisesFragmentArgs by navArgs()
-        val sessionId = args.id
-        Log.i("asd", "sessionId Exercices 11: $sessionId")
-
         //--------------------------------- Para el VIEWMODEL --------------------------------------------------------------
         val application = requireNotNull(this.activity).applicationContext
 
         val exercisesViewModel: ExercisesViewModel by viewModels {
-            ExercisesViewModelFactory((application as MultiplicationApplication).repository)
+            ExercisesViewModelFactory(
+                (application as MultiplicationApplication).sessionRepository,
+                application.exerciseRepository
+            )
         }
         //-------------------------------------------------------------------------------------------------------------------
 
         exercisesViewModel.currentSession.observe(viewLifecycleOwner) {
             currentSession = it
-            val currentTimeMillis = it.timestamp
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-            val dateString = dateFormat.format(Date(currentTimeMillis))
-            Log.i("asd", "allSessionn!!! DAte!: $dateString")
             exercisesViewModel.setListExercises(
                 difficulty = Difficulty.getDifficultyFromInt(it.difficulty),
                 quantity = it.numberOfExercises
             )
         }
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
-            newListExercises = it
+        exercisesViewModel.listExercises.observe(viewLifecycleOwner) { listExercises ->
+            newListExercises = listExercises
             currentSession?.let {
                 binding.difficultyExercisesTextview.text =
                     Difficulty.getDifficultyFromInt(it.difficulty).toString()
                 binding.quantityExercisesTextview.text = it.numberOfExercises.toString()
                 binding.submitButton.isEnabled = false
+                sessionId = currentSession!!.sessionId
 
                 currentExercise = newListExercises[numberExercise]
                 binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
                 binding.exerciseTextview.text =
                     "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
 
-
             }
+
             Log.i("asd", "newListExercises!!!: $newListExercises")
 
         }
 
-
         binding.submitButton.setOnClickListener {
+            answerUser = binding.answerEdittext.text.toString().toInt()
+            val answer = currentExercise!!.answer
+            if (answer == answerUser) {
+                isCorrect = true
+            }
+
+            exerciseForAdd = Exercise(
+                sessionId = sessionId,
+                operand1 = currentExercise!!.operand1,
+                operand2 = currentExercise!!.operand2,
+                answer = currentExercise!!.answer,
+                answerUser = answerUser,
+                correct = isCorrect
+            )
+            Log.i("asd", "Exercise for add: ${getExerciseString(exerciseForAdd)}")
+            exercisesViewModel.exerciseForAdd2(exerciseForAdd)
+            exercisesViewModel.insertExercise()
+
             numberExercise++
             currentExercise = newListExercises[numberExercise]
             binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
@@ -188,6 +199,23 @@ class ExercisesFragment : Fragment() {
     }*/
         return binding.root
     }
+
+    fun getExerciseString(exercise: Exercise): String {
+        val sessionId = exercise.sessionId ?: "null"
+        val operand1 = exercise.operand1 ?: 0
+        val operand2 = exercise.operand2 ?: 0
+        val answer = exercise.answer ?: 0
+        val answerUser = exercise.answerUser ?: 0
+        val correct = exercise.correct ?: false
+
+        return "sessionId: $sessionId, " +
+                "operand1: $operand1, " +
+                "operand2: $operand2, " +
+                "answer: $answer, " +
+                "answerUser: $answerUser, " +
+                "correct: $correct"
+    }
+
 
     private fun isAnswerValid(answer: String): Boolean {
         return answer.isNotBlank() && answer.toIntOrNull() != null

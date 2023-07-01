@@ -10,6 +10,8 @@ import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionE
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 import com.jdlstudios.multiplicationmasterapplication.data.models.toRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.ExerciseRepository
+import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.ExerciseRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.SessionRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.domain.models.toDomain
@@ -20,9 +22,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ExercisesViewModel(
-    private val sessionRepository: SessionRepositoryImpl
+    private val sessionRepository: SessionRepositoryImpl,
+    private val exerciseRepository: ExerciseRepositoryImpl
 ) : ViewModel() {
 
     private val dao: ExerciseDao? = null
@@ -77,19 +81,26 @@ class ExercisesViewModel(
         }
     }
 
-    private fun insertExercise() {
+    fun insertExercise() {
         viewModelScope.launch {
-            val l = dao?.insertExercise(
-                ExerciseUIModel(
-                    factor1 = 1,
-                    factor2 = 1,
-                    answer = 1,
-                    answerUser = 1,
-                    correct = true
-                ).toDomain().toRepository().toExerciseEntity()
-            )
-            Log.i("sum", "Long!! id: $l")
+            withContext(Dispatchers.IO){
+                _currentExercise.value?.let {
+                    Log.i("asd","Exercise Saved!! - exercise: $it")
+                    exerciseRepository.saveExercise(it)
+                }
+            }
         }
+    }
+
+    fun exerciseForAdd2(exercise: Exercise) {
+        _currentExercise.value = Exercise(
+            sessionId = exercise.sessionId,
+            operand1 = exercise.operand1,
+            operand2 = exercise.operand2,
+            answer = exercise.answer,
+            answerUser = exercise.answerUser,
+            correct = exercise.correct
+        )
     }
 
     fun exerciseForAdd(
