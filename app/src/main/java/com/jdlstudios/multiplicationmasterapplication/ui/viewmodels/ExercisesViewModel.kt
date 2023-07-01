@@ -29,43 +29,24 @@ class ExercisesViewModel(
     private val exerciseRepository: ExerciseRepositoryImpl
 ) : ViewModel() {
 
-    private val dao: ExerciseDao? = null
     private val generateListExercisesUseCase: GenerateListExercisesUseCase =
         GenerateListExercisesUseCase()
 
-    // LiveData para la nueva ejercitación generada
-    private val _exerciseNew = MutableLiveData<ExerciseUIModel>()
-    val exerciseNew: LiveData<ExerciseUIModel>
-        get() = _exerciseNew
-
-    // LiveData para indicar si se completó la ejercitación
-    private val _stateFinish = MutableLiveData<Boolean>()
-    val stateFinish: LiveData<Boolean>
-        get() = _stateFinish
-
-    // LiveData para la cantidad de ejercicios restantes
-    private val _remainingExercises = MutableLiveData<Int>()
-    private val remainingExercises: LiveData<Int>
-        get() = _remainingExercises
-
-    // LiveData para la lista de ejercicios generada
     private val _listExercises = MutableLiveData<List<Exercise>>()
     val listExercises: LiveData<List<Exercise>>
         get() = _listExercises
 
-    // Ejercicio para agregar
     private val _currentExercise = MutableLiveData<Exercise>()
     val currentExercise: LiveData<Exercise>
         get() = _currentExercise
 
-    // LiveData para la posición seleccionada actualmente
-    private val _selectedPosition = MutableLiveData<Int>()
-    val selectedPosition: LiveData<Int> = _selectedPosition
-
-
     private var _currentSession = MutableLiveData<SessionEntity>()
     val currentSession: LiveData<SessionEntity>
         get() = _currentSession
+
+    private var _updateSession = MutableLiveData<SessionEntity>()
+    val updateSession: LiveData<SessionEntity>
+        get() = _updateSession
 
     init {
         getCurrentSession()
@@ -90,6 +71,27 @@ class ExercisesViewModel(
                 }
             }
         }
+    }
+    fun updateSession() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _updateSession.value?.let {
+                    Log.i("asd","Session Updated!! - session: $it")
+                    sessionRepository.updateSession(it)
+                }
+            }
+        }
+    }
+
+    fun sessionForUpdate(correctAnswers: Int, incorrectAnswers: Int, score: Int){
+        _updateSession.value = SessionEntity(
+            sessionId = _currentSession.value!!.sessionId,
+            difficulty = _currentSession.value!!.difficulty,
+            numberOfExercises = _currentSession.value!!.numberOfExercises,
+            correctAnswers = correctAnswers,
+            incorrectAnswers = incorrectAnswers,
+            score = score
+        )
     }
 
     fun exerciseForAdd2(exercise: Exercise) {
@@ -126,18 +128,8 @@ class ExercisesViewModel(
         val list: List<Exercise> =
             generateListExercisesUseCase.generateListExercises(difficulty, quantity)
         _listExercises.value = list
-        _remainingExercises.value = list.size
-        _stateFinish.value = false
-        _selectedPosition.value = 0
     }
 
-    // Avanza a la siguiente posición
-    fun nextItem() {
-        val currentPos = _selectedPosition.value ?: 0
-        if (currentPos < (listExercises.value?.size?.minus(1) ?: 0)) {
-            _selectedPosition.value = currentPos + 1
-        }
-    }
 
     // Comprueba si la respuesta es correcta
     fun checkAnswer(answer: Int, exercise: ExerciseUIModel): Boolean {
@@ -145,22 +137,5 @@ class ExercisesViewModel(
         return answer == answerExercise
     }
 
-    // Setea el ejercicio actual
-    fun setExerciseNew(exercise: ExerciseUIModel) {
-        _exerciseNew.value = exercise
-    }
-
-    // Completa un ejercicio
-    fun completeExercise() {
-        _remainingExercises.value = _remainingExercises.value!! - 1
-        if (_remainingExercises.value == 0) {
-            _stateFinish.value = true
-        }
-    }
-
-    // Retorna la cantidad de ejercicios restantes
-    fun getRemainingExercises(): Int? {
-        return remainingExercises.value
-    }
 
 }

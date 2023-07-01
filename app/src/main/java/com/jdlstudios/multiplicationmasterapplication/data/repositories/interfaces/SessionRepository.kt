@@ -5,7 +5,7 @@ import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 
 interface SessionRepository {
     suspend fun saveSession(session: Session)
-    suspend fun updateSession(session: Session)
+    suspend fun updateSession(session: SessionEntity)
     suspend fun getSessionBySessionId(sessionId: Long): Session
 
 }

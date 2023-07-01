@@ -96,6 +96,9 @@ class ExercisesFragment : Fragment() {
             exercisesViewModel.exerciseForAdd2(exerciseForAdd)
             exercisesViewModel.insertExercise()
 
+            exercisesViewModel.sessionForUpdate(100,50,999)
+            exercisesViewModel.updateSession()
+
             numberExercise++
             currentExercise = newListExercises[numberExercise]
             binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
