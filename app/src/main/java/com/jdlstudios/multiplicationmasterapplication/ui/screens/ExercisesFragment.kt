@@ -9,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
+import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
@@ -71,6 +74,7 @@ class ExercisesFragment : Fragment() {
                 binding.exerciseTextview.text =
                     "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
 
+
             }
 
             Log.i("asd", "newListExercises!!!: $newListExercises")
@@ -99,7 +103,13 @@ class ExercisesFragment : Fragment() {
             exercisesViewModel.sessionForUpdate(100,50,999)
             exercisesViewModel.updateSession()
 
-            numberExercise++
+            if (numberExercise==newListExercises.size-1){
+                it.findNavController().navigate(R.id.action_exercisesFragment_to_feedbackFragment)
+            }else{
+                numberExercise++
+                Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
+            }
+
             currentExercise = newListExercises[numberExercise]
             binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
             binding.exerciseTextview.text =
