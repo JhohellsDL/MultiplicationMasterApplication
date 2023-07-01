@@ -15,7 +15,6 @@ enum class Difficulty {
             CHALLENGING to "Challenging",
             ADVANCED to "Advanced"
         )
-
         fun getDifficultyFromString(name: String): Difficulty {
             return when (name.uppercase(Locale.ROOT)) {
                 "EASY" -> EASY
@@ -26,6 +25,15 @@ enum class Difficulty {
             }
         }
 
+        fun getDifficultyFromInt(value: Int): Difficulty {
+            return when (value) {
+                0 -> EASY
+                1 -> INTERMEDIATE
+                2 -> CHALLENGING
+                3 -> ADVANCED
+                else -> throw IllegalArgumentException("Invalid difficulty level value")
+            }
+        }
         fun getDifficultyToString(difficultyLevel: Difficulty): String {
             return values[difficultyLevel]
                 ?: throw IllegalArgumentException("Invalid difficulty level")

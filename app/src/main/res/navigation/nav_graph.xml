@@ -40,11 +40,8 @@
             android:id="@+id/action_exercisesFragment_to_feedbackFragment"
             app:destination="@id/feedbackFragment" />
         <argument
-            android:name="quantity"
-            app:argType="integer" />
-        <argument
-            android:name="difficulty"
-            app:argType="integer" />
+            android:name="id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/feedbackFragment"

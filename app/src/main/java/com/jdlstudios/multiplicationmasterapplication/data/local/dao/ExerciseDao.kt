@@ -1,20 +1,20 @@
-package com.jdlstudios.multiplicationmasterapplication.data.cache.dao
+package com.jdlstudios.multiplicationmasterapplication.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.jdlstudios.multiplicationmasterapplication.data.cache.models.ExerciseCacheEntity
+import com.jdlstudios.multiplicationmasterapplication.data.local.models.ExerciseEntity
 
 @Dao
-interface ExerciseCacheDao {
+interface ExerciseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExercise(exercise: ExerciseCacheEntity): Long
+    suspend fun insertExercise(exercise: ExerciseEntity): Long
 
     @Query("SELECT * FROM exercise WHERE session_id = :sessionId")
-    suspend fun getExercisesForSession(sessionId: Long): List<ExerciseCacheEntity>
+    suspend fun getExercisesForSession(sessionId: Long): List<ExerciseEntity>
 
     @Query("SELECT COUNT(*) FROM exercise WHERE session_id = :sessionId AND correct = 1")
     suspend fun getCorrectCountForSession(sessionId: Long): Int
@@ -26,6 +26,6 @@ interface ExerciseCacheDao {
     suspend fun deleteExercisesForSession(sessionId: Long)
 
     @Update
-    suspend fun updateExercise(exercise: ExerciseCacheEntity)
+    suspend fun updateExercise(exercise: ExerciseEntity)
 
 }

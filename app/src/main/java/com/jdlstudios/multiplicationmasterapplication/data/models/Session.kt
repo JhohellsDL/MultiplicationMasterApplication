@@ -1,21 +1,21 @@
 package com.jdlstudios.multiplicationmasterapplication.data.models
 
-import androidx.room.PrimaryKey
-import com.jdlstudios.multiplicationmasterapplication.data.cache.models.MultiplicationTableCacheEntity
-import com.jdlstudios.multiplicationmasterapplication.data.cache.models.SessionCacheEntity
+import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 
 data class Session(
-    val sessionId: Long = 0L,
     val difficulty: Int,
     val numberOfExercises: Int,
+    val correctAnswers: Int,
+    val incorrectAnswers: Int,
     val score: Int,
     val timestamp: Long = System.currentTimeMillis()
 ){
-    fun toSessionCacheEntity(): SessionCacheEntity {
-        return SessionCacheEntity(
-            sessionId = sessionId,
+    fun toSessionEntity(): SessionEntity {
+        return SessionEntity(
             difficulty = difficulty,
             numberOfExercises = numberOfExercises,
+            correctAnswers = correctAnswers,
+            incorrectAnswers = incorrectAnswers,
             score = score,
             timestamp = timestamp
         )

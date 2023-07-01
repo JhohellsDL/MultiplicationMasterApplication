@@ -1,25 +1,35 @@
 package com.jdlstudios.multiplicationmasterapplication.data.models
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import com.jdlstudios.multiplicationmasterapplication.data.cache.models.ExerciseCacheEntity
+import com.jdlstudios.multiplicationmasterapplication.data.local.models.ExerciseEntity
+import com.jdlstudios.multiplicationmasterapplication.domain.models.ExerciseItem
 
 data class Exercise(
-    val id: Long = 0,
     val sessionId: Long,
     val operand1: Int,
     val operand2: Int,
     val answer: Int,
+    val answerUser: Int,
     val correct: Boolean
 ) {
-    fun toExerciseCacheEntity(): ExerciseCacheEntity {
-        return ExerciseCacheEntity(
-            id = id,
+    fun toExerciseEntity(): ExerciseEntity {
+        return ExerciseEntity(
             sessionId = sessionId,
             operand1 = operand1,
             operand2 = operand2,
             answer = answer,
+            answerUser = answerUser,
             correct = correct
         )
     }
+}
+
+fun ExerciseItem.toRepository(): Exercise {
+    return Exercise(
+        sessionId = sessionId,
+        operand1 = operand1,
+        operand2 = operand2,
+        answer = answer,
+        answerUser = answerUser,
+        correct = correct
+    )
 }

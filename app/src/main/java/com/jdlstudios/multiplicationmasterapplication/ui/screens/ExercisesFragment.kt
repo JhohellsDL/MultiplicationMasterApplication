@@ -1,53 +1,97 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.trace
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
+import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
+import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
+import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.models.ExerciseUIModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
+import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentExercisesBinding
-    private val exercisesViewModel: ExercisesViewModel by viewModels()
-    private var newListExercises: MutableList<ExerciseUIModel> = mutableListOf()
+    private var currentSession: SessionEntity? = null
+    private var newListExercises: List<Exercise> = mutableListOf()
+    private var currentExercise: Exercise? = null
+    private var numberExercise: Int = 0
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentExercisesBinding.inflate(inflater)
 
-        // Obtener los argumentos enviados desde la pantalla anterior
+// Obtener los argumentos enviados desde la pantalla anterior
         val args: ExercisesFragmentArgs by navArgs()
-        val quantityExercises = args.quantity
-        val difficultyExercises = Difficulty.values().getOrElse(args.difficulty) { Difficulty.EASY }
+        val sessionId = args.id
+        Log.i("asd", "sessionId Exercices 11: $sessionId")
 
-        // Actualizar la lista de ejercicios con la dificultad y cantidad de ejercicios recibidos
-        updateExercisesList(difficultyExercises, quantityExercises)
+        //--------------------------------- Para el VIEWMODEL --------------------------------------------------------------
+        val application = requireNotNull(this.activity).applicationContext
 
-        // Observar el ViewModel para saber cuál es el ejercicio seleccionado
-        exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-            starExercise(it)
+        val exercisesViewModel: ExercisesViewModel by viewModels {
+            ExercisesViewModelFactory((application as MultiplicationApplication).repository)
+        }
+        //-------------------------------------------------------------------------------------------------------------------
+
+        exercisesViewModel.currentSession.observe(viewLifecycleOwner) {
+            currentSession = it
+            val currentTimeMillis = it.timestamp
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+            val dateString = dateFormat.format(Date(currentTimeMillis))
+            Log.i("asd", "allSessionn!!! DAte!: $dateString")
+            exercisesViewModel.setListExercises(
+                difficulty = Difficulty.getDifficultyFromInt(it.difficulty),
+                quantity = it.numberOfExercises
+            )
+        }
+        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
+            newListExercises = it
+            currentSession?.let {
+                binding.difficultyExercisesTextview.text =
+                    Difficulty.getDifficultyFromInt(it.difficulty).toString()
+                binding.quantityExercisesTextview.text = it.numberOfExercises.toString()
+                binding.submitButton.isEnabled = false
+
+                currentExercise = newListExercises[numberExercise]
+                binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
+                binding.exerciseTextview.text =
+                    "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
+
+
+            }
+            Log.i("asd", "newListExercises!!!: $newListExercises")
+
         }
 
-        // Mostrar la dificultad y cantidad de ejercicios en la pantalla
-        binding.difficultyExercisesTextview.text = difficultyExercises.name
-        binding.quantityExercisesTextview.text = quantityExercises.toString()
-        binding.submitButton.isEnabled = false
 
-        // Habilitar el botón de enviar respuesta solamente si el campo de texto no está vacío y contiene un número válido
+        binding.submitButton.setOnClickListener {
+            numberExercise++
+            currentExercise = newListExercises[numberExercise]
+            binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
+            binding.exerciseTextview.text =
+                "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
+        }
+
         binding.answerEdittext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -57,6 +101,14 @@ class ExercisesFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // Observar el ViewModel para saber cuál es el ejercicio seleccionado
+        /*exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
+            starExercise(it)
+        }
+
+        // Habilitar el botón de enviar respuesta solamente si el campo de texto no está vacío y contiene un número válido
+
 
         // Acción al presionar el botón de enviar respuesta
         binding.submitButton.setOnClickListener {
@@ -129,6 +181,12 @@ class ExercisesFragment : Fragment() {
 
     private fun updateExercisesList(difficultyExercises: Difficulty, quantity: Int) {
         exercisesViewModel.setListExercises(difficultyExercises, quantity)
+    }
+
+    private fun isAnswerValid(answer: String): Boolean {
+        return answer.isNotBlank() && answer.toIntOrNull() != null
+    }*/
+        return binding.root
     }
 
     private fun isAnswerValid(answer: String): Boolean {

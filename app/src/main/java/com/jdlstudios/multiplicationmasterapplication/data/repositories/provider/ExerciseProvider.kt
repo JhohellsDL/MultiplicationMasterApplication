@@ -22,11 +22,11 @@ class ExerciseProvider {
             val r = f1 * f2
 
             return Exercise(
-                id = 0,
                 sessionId = 0,
                 operand1 = f1,
                 operand2 = f2,
                 answer = r,
+                answerUser = 0,
                 correct = false
             )
         }

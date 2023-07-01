@@ -1,21 +1,18 @@
 package com.jdlstudios.multiplicationmasterapplication.data.sources
 
-import com.jdlstudios.multiplicationmasterapplication.data.cache.dao.ExerciseCacheDao
-import com.jdlstudios.multiplicationmasterapplication.data.cache.dao.SessionCacheDao
-import com.jdlstudios.multiplicationmasterapplication.data.cache.models.SessionCacheEntity
+import com.jdlstudios.multiplicationmasterapplication.data.local.dao.ExerciseDao
+import com.jdlstudios.multiplicationmasterapplication.data.local.dao.SessionDao
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.data.models.Session
-import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
-import kotlinx.coroutines.flow.map
 
 class SessionDataSourceImpl(
-    private val sessionDao: SessionCacheDao,
-    private val exerciseDao: ExerciseCacheDao
+    private val sessionDao: SessionDao,
+    private val exerciseDao: ExerciseDao
 ) :
     SessionDataSource {
     override suspend fun createSession(session: Session): Long {
-        sessionDao.insertSession(session.toSessionCacheEntity())
-        return session.sessionId
+        sessionDao.insertSession(session.toSessionEntity())
+        return 0
     }
 
     override suspend fun getSession(sessionId: Long): Session {
@@ -23,11 +20,11 @@ class SessionDataSourceImpl(
     }
 
     override suspend fun getSessions(): List<Session> {
-        return sessionDao.getAllSessions().map { it.toSession() }
+        TODO("Not yet implemented")
     }
 
     override suspend fun saveExercise(sessionId: Long, exercise: Exercise) {
-        val exerciseCacheEntity = exercise.toExerciseCacheEntity()
+        val exerciseCacheEntity = exercise.toExerciseEntity()
         exerciseDao.insertExercise(exerciseCacheEntity)
     }
 
