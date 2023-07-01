@@ -11,6 +11,7 @@ import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentFeedbackBinding
+import com.jdlstudios.multiplicationmasterapplication.ui.adapters.FeedbackAdapter
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModelFactory
 
@@ -23,6 +24,9 @@ class FeedbackFragment : Fragment() {
     ): View {
         binding = FragmentFeedbackBinding.inflate(inflater)
 
+        val adapter: FeedbackAdapter = FeedbackAdapter()
+
+
         val application = requireNotNull(this.activity).applicationContext
         val feedbackViewModel: FeedbackViewModel by viewModels {
             FeedbackViewModelFactory(
@@ -31,11 +35,16 @@ class FeedbackFragment : Fragment() {
             )
         }
 
-
         feedbackViewModel.currentSession.observe(viewLifecycleOwner){
             Log.i("asd",sessionToString(it))
+            feedbackViewModel.getListExercises(it.sessionId)
         }
 
+        feedbackViewModel.listExercises.observe(viewLifecycleOwner){
+            Log.i("asd","Lista ejercicios: $it")
+            adapter.data = it
+            binding.recyclerView.adapter = adapter
+        }
         return binding.root
     }
 

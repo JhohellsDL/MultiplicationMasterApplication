@@ -17,7 +17,9 @@ class ExerciseRepositoryImpl(
     }
 
     override suspend fun getExercisesBySessionId(sessionId: Long): List<Exercise> {
-        TODO("Not yet implemented")
+        return exerciseDao.getExercisesForSession(sessionId).map {
+            it.toExercise()
+        }
     }
 
     override suspend fun uploadExercise(exercise: Exercise) {
