@@ -14,4 +14,7 @@
     <string name="avanzado_Text">Avanzado</string>
     <string name="selecciona_la_cantidad_de_ejercicios">Selecciona la cantidad de ejercicios</string>
     <string name="cero">0</string>
+    <string name="sign">x</string>
+    <string name="cantidad_ejercicios">Cantidad Ejercicios</string>
+    <string name="ejercicios_restantes">Ejercicios restantes</string>
 </resources>

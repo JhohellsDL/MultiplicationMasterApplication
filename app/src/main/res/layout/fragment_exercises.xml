@@ -29,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/comfortaa"
+            android:text="@string/cantidad_ejercicios"
             android:textColor="@color/textBody"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_textview"
-            android:text="Cantidad Ejercicios" />
+            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_textview" />
 
         <TextView
             android:id="@+id/quantity_exercises_textview"
@@ -62,20 +62,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/comfortaa"
+            android:text="@string/ejercicios_restantes"
             android:textColor="@color/textBody"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_remaining_textview"
-            android:text="Ejercicios restantes" />
+            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_remaining_textview" />
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:translationZ="10dp"
             app:cardCornerRadius="16dp"
-            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quantity_exercises_label">
@@ -93,12 +93,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/comfortaa"
+                    android:text="@string/sign"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/exercise_textview"
-                    app:layout_constraintTop_toTopOf="@id/exercise_textview"
-                    android:text="x" />
+                    app:layout_constraintTop_toTopOf="@id/exercise_textview" />
 
                 <TextView
                     android:id="@+id/exercise_textview"
@@ -140,14 +140,15 @@
                     android:id="@+id/answer_edittext"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="-8dp"
+                    android:autofillHints="name"
                     android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
                     android:hint="@string/cero"
                     android:inputType="number"
                     android:textColor="@color/textTitle"
                     android:textSize="32sp"
-                    android:gravity="center"
-                    android:layout_marginEnd="-8dp"
-                    android:fontFamily="@font/comfortaa"
                     app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintTop_toBottomOf="@id/divider_operation" />
 
@@ -167,14 +168,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="45dp"
             android:backgroundTint="@color/colorButtonPressed"
+            android:contentDescription="@string/app_name"
             android:tint="@color/colorButtonPressed"
+            android:visibility="gone"
             app:backgroundTint="@color/accent"
             app:elevation="16dp"
             app:layout_constraintBottom_toBottomOf="@id/card_view_exercise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/card_view_exercise"
             app:rippleColor="@color/accent1"
-            android:visibility="gone"
             app:srcCompat="@drawable/baseline_check" />
 
 
