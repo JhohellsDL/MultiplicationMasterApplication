@@ -13,4 +13,5 @@
     <string name="desafio_text">Desafio</string>
     <string name="avanzado_Text">Avanzado</string>
     <string name="selecciona_la_cantidad_de_ejercicios">Selecciona la cantidad de ejercicios</string>
+    <string name="cero">0</string>
 </resources>

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
@@ -31,7 +32,10 @@ class ExercisesFragment : Fragment() {
     private var sessionId: Long = 0
     private var currentExercise: Exercise? = null
 
+    private var numberTotalExercise: Int = 0
     private var numberExercise: Int = 0
+    private var numberCorrects: Int = 0
+    private var numberIncorrects: Int = 0
     private var answerUser: Int = 0
     private var isCorrect: Boolean = false
 
@@ -42,16 +46,13 @@ class ExercisesFragment : Fragment() {
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater)
 
-        //--------------------------------- Para el VIEWMODEL --------------------------------------------------------------
         val application = requireNotNull(this.activity).applicationContext
-
         val exercisesViewModel: ExercisesViewModel by viewModels {
             ExercisesViewModelFactory(
                 (application as MultiplicationApplication).sessionRepository,
                 application.exerciseRepository
             )
         }
-        //-------------------------------------------------------------------------------------------------------------------
 
         exercisesViewModel.currentSession.observe(viewLifecycleOwner) {
             currentSession = it
@@ -60,20 +61,21 @@ class ExercisesFragment : Fragment() {
                 quantity = it.numberOfExercises
             )
         }
+
         exercisesViewModel.listExercises.observe(viewLifecycleOwner) { listExercises ->
             newListExercises = listExercises
+            numberTotalExercise = listExercises.size
             currentSession?.let {
                 binding.difficultyExercisesTextview.text =
                     Difficulty.getDifficultyFromInt(it.difficulty).toString()
                 binding.quantityExercisesTextview.text = it.numberOfExercises.toString()
-                binding.submitButton.isEnabled = false
+                binding.submitButton2.isVisible = false
                 sessionId = currentSession!!.sessionId
 
                 currentExercise = newListExercises[numberExercise]
                 binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
-                binding.exerciseTextview.text =
-                    "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
-
+                binding.exerciseTextview.text = currentExercise!!.operand1.toString()
+                binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
 
             }
 
@@ -81,11 +83,14 @@ class ExercisesFragment : Fragment() {
 
         }
 
-        binding.submitButton.setOnClickListener {
+        binding.submitButton2.setOnClickListener {
             answerUser = binding.answerEdittext.text.toString().toInt()
             val answer = currentExercise!!.answer
             if (answer == answerUser) {
                 isCorrect = true
+                numberCorrects++
+            }else{
+                numberIncorrects++
             }
 
             exerciseForAdd = Exercise(
@@ -100,27 +105,26 @@ class ExercisesFragment : Fragment() {
             exercisesViewModel.exerciseForAdd2(exerciseForAdd)
             exercisesViewModel.insertExercise()
 
-            exercisesViewModel.sessionForUpdate(100,50,999)
-            exercisesViewModel.updateSession()
-
-            if (numberExercise==newListExercises.size-1){
+            if (numberExercise == newListExercises.size - 1) {
+                exercisesViewModel.sessionForUpdate(numberCorrects, numberIncorrects, getScore(numberTotalExercise, numberCorrects))
+                exercisesViewModel.updateSession()
                 it.findNavController().navigate(R.id.action_exercisesFragment_to_feedbackFragment)
-            }else{
+            } else {
                 numberExercise++
                 Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
             }
 
             currentExercise = newListExercises[numberExercise]
             binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
-            binding.exerciseTextview.text =
-                "${currentExercise!!.operand1} X ${currentExercise!!.operand2} = ${currentExercise!!.answer}"
+            binding.exerciseTextview.text = currentExercise!!.operand1.toString()
+            binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
         }
 
         binding.answerEdittext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isAnswerValid = isAnswerValid(s.toString())
-                binding.submitButton.isEnabled = isAnswerValid
+                binding.submitButton2.isVisible = isAnswerValid
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -211,6 +215,12 @@ class ExercisesFragment : Fragment() {
         return answer.isNotBlank() && answer.toIntOrNull() != null
     }*/
         return binding.root
+    }
+
+    private fun getScore(numberTotalExercise: Int, numberCorrects: Int): Int {
+        var score: Int = 0
+        score = (100*numberCorrects)/numberTotalExercise
+        return score
     }
 
     fun getExerciseString(exercise: Exercise): String {
