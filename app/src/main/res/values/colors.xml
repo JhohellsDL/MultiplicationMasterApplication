@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bg">#E7F1F9</color>
-    <color name="accent">#FE805D</color>
+    <color name="accent">#FF9800</color>
     <color name="text">#26344F</color>
     <color name="secondary">#7B8783</color>
 
@@ -14,8 +14,10 @@
     <color name="backgroundPrimary">#FFFFFF</color>
     <color name="backgroundSecondary">#E7F1F9</color>
 
-    <color name="accent1">#FE805D</color>
-    <color name="accent2">#5FC563</color>
+    <color name="accent1">#FF9800</color>
+    <color name="accent2">#00CED1</color>
+    <color name="accent3">#FFEB3B</color>
+    <color name="accent4">#00FF7F</color>
 
 
     <color name="verde1">#00B140</color>
@@ -23,7 +25,6 @@
     <color name="verde3">#808000</color>
     <color name="verde4">#98FF98</color>
     <color name="verde5">#ADDFAD</color>
-
 
 
     Fondo principal:
@@ -42,4 +43,5 @@
     Barras de progreso:
     <color name="colorProgressBackground">#C0C0C0</color> (Gris claro)
     <color name="colorProgressBar">#00B140</color> (Verde esmeralda)
+
 </resources>

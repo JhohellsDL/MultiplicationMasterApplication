@@ -2,4 +2,15 @@
     <string name="app_name">Multiplication Master Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_description">Entrena tus habilidades de multiplicación. Elige ejercicios y niveles de dificultad, verifica respuestas y obtén puntajes. ¡Conviértete en un maestro de la multiplicación!</string>
+    <string name="app_title_home">Bienvenido a MultiMath Trainer!</string>
+    <string name="historial">Historial</string>
+    <string name="practicar">Practicar</string>
+    <string name="imagen_home">Imagen home</string>
+    <string name="selected_difficulty_text">Selecciona el nivel de dificultad</string>
+    <string name="facil_text">Fácil</string>
+    <string name="intermedio_text">Intermedio</string>
+    <string name="desafio_text">Desafio</string>
+    <string name="avanzado_Text">Avanzado</string>
+    <string name="selecciona_la_cantidad_de_ejercicios">Selecciona la cantidad de ejercicios</string>
 </resources>

@@ -21,14 +21,16 @@
             android:src="@drawable/icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ImageContrastCheck"
+            android:contentDescription="@string/imagen_home" />
 
         <TextView
             android:id="@+id/text_name_app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Bienvenido a MultiMath Trainer!"
+            android:text="@string/app_title_home"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -42,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="Entrena tus habilidades de multiplicación. Elige ejercicios y niveles de dificultad, verifica respuestas y obtén puntajes. ¡Conviértete en un maestro de la multiplicación!"
+            android:text="@string/app_description"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,13 +53,12 @@
 
         <Button
             android:id="@+id/button_practice"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:elevation="8dp"
-            android:lines="2"
-            android:text="Practicar"
+            android:text="@string/practicar"
             android:textColor="@color/colorTextPrimary"
             app:layout_constraintBottom_toTopOf="@id/button_history"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,12 +67,11 @@
 
         <Button
             android:id="@+id/button_history"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/colorButtonNormal"
-            android:lines="2"
-            android:text="Ver Historial"
+            android:text="@string/historial"
             android:textColor="@color/colorTextPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

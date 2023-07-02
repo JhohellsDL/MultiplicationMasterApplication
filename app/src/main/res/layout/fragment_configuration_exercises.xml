@@ -1,88 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.screens.ConfigurationExercisesFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/verde4"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/label_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selecciona el nivel de dificultad"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-
-        <RadioGroup
-            android:id="@+id/difficulty_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp">
-
-            <RadioButton
-                android:id="@+id/easy_difficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fácil"
-                android:tag="EASY"/>
-
-            <RadioButton
-                android:id="@+id/medium_difficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Intermedio"
-                android:tag="INTERMEDIATE"/>
-
-            <RadioButton
-                android:id="@+id/hard_difficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Desafio"
-                android:tag="CHALLENGING"/>
-
-            <RadioButton
-                android:id="@+id/expert_difficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Avanzado"
-                android:tag="ADVANCED"/>
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecciona la cantidad de ejercicios"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp"/>
-
-        <SeekBar
-            android:id="@+id/seekbar_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="20"
-            android:progress="10" />
-
-        <TextView
-            android:id="@+id/selected_exercise_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/selected_difficulty_text"
+            android:textColor="@color/textTitle"
             android:textSize="18sp"
-            android:paddingTop="8dp"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_select_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:translationZ="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_title">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundSecondary">
+
+                <RadioGroup
+                    android:id="@+id/difficulty_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/easy_difficulty"
+                        style="@style/Widget.App.RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="EASY"
+                        android:text="@string/facil_text"
+                        android:textColor="@color/textTitle" />
+
+                    <RadioButton
+                        android:id="@+id/medium_difficulty"
+                        style="@style/Widget.App.RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="INTERMEDIATE"
+                        android:text="@string/intermedio_text"
+                        android:textColor="@color/textTitle" />
+
+                    <RadioButton
+                        android:id="@+id/hard_difficulty"
+                        style="@style/Widget.App.RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="CHALLENGING"
+                        android:text="@string/desafio_text"
+                        android:textColor="@color/textTitle" />
+
+                    <RadioButton
+                        android:id="@+id/expert_difficulty"
+                        style="@style/Widget.App.RadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="ADVANCED"
+                        android:text="@string/avanzado_Text"
+                        android:textColor="@color/textTitle" />
+
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/label_title_select_number_exercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/selecciona_la_cantidad_de_ejercicios"
+            android:textColor="@color/textTitle"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_view_select_difficulty" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_select_number_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:translationZ="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_title_select_number_exercises">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundPrimary"
+                android:padding="16dp">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_number_exercises"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="Activar Slider  "
+                    android:textColor="@color/textTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:thumbTint="@color/colorButtonNormal"
+                    app:trackTint="@color/accent1" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider_quantity"
+                    style="@style/Widget.App.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:stepSize="10"
+                    android:value="40"
+                    android:valueTo="100"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/switch_number_exercises" />
+
+                <EditText
+                    android:id="@+id/selected_exercise_amount_edit_text"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/accent1"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="10"
+                    android:inputType="number"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/text"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_number_exercises"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/switch_number_exercises" />
+
+                <TextView
+                    android:id="@+id/selected_exercise_amount"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:textColor="@color/text"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_number_exercises"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/switch_number_exercises"
+                    tools:text="10" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/start_button"
-            android:layout_width="match_parent"
+            style="@style/Widget.App.Button"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:text="Comenzar" />
+            android:enabled="false"
+            android:text="Comenzar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
