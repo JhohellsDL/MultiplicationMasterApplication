@@ -9,8 +9,8 @@
         android:id="@+id/card_view_share_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="12dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
         android:translationZ="4dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,81 +21,109 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/backgroundSecondary"
             android:padding="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image_reading_item_exercise"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/baseline_good"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
-                android:id="@+id/text_title"
+                android:id="@+id/text_exercise_complete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
                 android:layout_marginEnd="8dp"
+                android:fontFamily="@font/comfortaa"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorTextPrimary2"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/image_reading_item_exercise"
                 app:layout_constraintTop_toTopOf="@id/image_reading_item_exercise"
-                tools:text="Correcto" />
+                tools:text="34 x 52" />
 
             <TextView
-                android:id="@+id/text_exercise"
+                android:id="@+id/text_correct"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:gravity="center_vertical"
-                android:textSize="12sp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/text_title"
-                app:layout_constraintTop_toBottomOf="@id/text_title"
-                tools:text="34 x 5" />
+                android:fontFamily="@font/comfortaa"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/text_exercise_complete"
+                app:layout_constraintTop_toBottomOf="@id/text_exercise_complete"
+                tools:text="Correcto" />
+
             <TextView
                 android:id="@+id/label_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/comfortaa"
+                android:text="Respuesta"
+                android:textColor="@color/colorTextPrimary2"
+                android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@id/divider"
-                tools:text="respuesta" />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/text_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/divider"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/colorTextSecondary2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/label_answer"
+                app:layout_constraintStart_toStartOf="@id/label_answer"
                 app:layout_constraintTop_toBottomOf="@id/label_answer"
-                tools:text="22" />
+                tools:text="222312" />
+
             <View
                 android:id="@+id/divider"
-                android:layout_width="1dp"
+                android:layout_width="2dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="4dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="60dp"
+                android:background="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/label_answer_user"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/label_answer_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/comfortaa"
+                android:text="Usuario"
+                android:textColor="@color/colorTextPrimary2"
+                android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="respuesta usuario"/>
+                app:layout_constraintStart_toEndOf="@id/divider"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/text_answer_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/accent1"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider"
                 app:layout_constraintTop_toBottomOf="@id/label_answer_user"
-                tools:text="22"/>
-
+                tools:text="123789" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,26 +15,29 @@
     <color name="backgroundSecondary">#E7F1F9</color>
 
     <color name="accent1">#FF9800</color>
-    <color name="accent2">#00CED1</color>
-    <color name="accent3">#FFEB3B</color>
+    <color name="accent2">#E7856A</color>
+    <color name="accent3">#FED502</color>
     <color name="accent4">#00FF7F</color>
 
 
     <color name="verde1">#00B140</color>
     <color name="verde2">#7FFF00</color>
     <color name="verde3">#808000</color>
-    <color name="verde4">#98FF98</color>
+    <color name="verde4">#6DC69C</color>
     <color name="verde5">#ADDFAD</color>
 
 
     Fondo principal:
-    <color name="colorPrimary">#00B140</color> (Verde esmeralda)
+    <color name="colorPrimary">#0AAF60</color> (Verde esmeralda)
     Barra de acción:
-    <color name="colorPrimaryDark">#00642C</color> (Verde oscuro)
+    <color name="colorPrimaryDark">#008B48</color> (Verde oscuro)
     Texto principal:
     <color name="colorTextPrimary">#FFFFFF</color> (Blanco)
     Texto secundario:
-    <color name="colorTextSecondary">#C0C0C0</color> (Gris claro)
+    <color name="colorTextSecondary">#BFBFBF</color> (Gris claro)
+    <color name="colorTextPrimary2">#05331E</color> (Blanco)
+    Texto secundario:
+    <color name="colorTextSecondary2">#2FAA71</color> (Gris claro)
     Botones:
     <color name="colorButtonNormal">#00B140</color> (Verde esmeralda)
     <color name="colorButtonPressed">#008A2E</color> (Verde más oscuro cuando se presiona)

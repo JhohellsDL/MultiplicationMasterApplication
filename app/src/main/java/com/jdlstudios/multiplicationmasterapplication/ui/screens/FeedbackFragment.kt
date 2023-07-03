@@ -11,6 +11,7 @@ import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentFeedbackBinding
+import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.adapters.FeedbackAdapter
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModelFactory
@@ -26,7 +27,6 @@ class FeedbackFragment : Fragment() {
 
         val adapter: FeedbackAdapter = FeedbackAdapter()
 
-
         val application = requireNotNull(this.activity).applicationContext
         val feedbackViewModel: FeedbackViewModel by viewModels {
             FeedbackViewModelFactory(
@@ -35,16 +35,22 @@ class FeedbackFragment : Fragment() {
             )
         }
 
+        feedbackViewModel.listExercises.observe(viewLifecycleOwner){
+            adapter.data = it
+            Log.i("asd","lista actual de ejercicios - $it")
+            binding.recyclerView.adapter = adapter
+        }
+
         feedbackViewModel.currentSession.observe(viewLifecycleOwner){
-            Log.i("asd",sessionToString(it))
+            binding.textDifficulty.text = Difficulty.getDifficultyFromInt(it.difficulty).toString()
+            binding.correctTextview.text = "${it.correctAnswers} ejercicios"
+            binding.incorrectTextview.text = "${it.incorrectAnswers} ejercicios"
+            binding.timeTextview.text = it.timestamp.toString()
+            binding.scoreTextview.text = it.score.toString()
+            binding.numberExercisesTextview.text = it.numberOfExercises.toString()
             feedbackViewModel.getListExercises(it.sessionId)
         }
 
-        feedbackViewModel.listExercises.observe(viewLifecycleOwner){
-            Log.i("asd","Lista ejercicios: $it")
-            adapter.data = it
-            binding.recyclerView.adapter = adapter
-        }
         return binding.root
     }
 

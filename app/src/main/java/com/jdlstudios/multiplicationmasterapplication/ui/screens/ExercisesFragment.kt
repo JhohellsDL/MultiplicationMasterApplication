@@ -90,6 +90,7 @@ class ExercisesFragment : Fragment() {
                 isCorrect = true
                 numberCorrects++
             }else{
+                isCorrect = false
                 numberIncorrects++
             }
 
