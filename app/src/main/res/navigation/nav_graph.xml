@@ -44,5 +44,9 @@
         android:id="@+id/feedbackFragment"
         android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.FeedbackFragment"
         android:label="fragment_feedback"
-        tools:layout="@layout/fragment_feedback" />
+        tools:layout="@layout/fragment_feedback" >
+        <action
+            android:id="@+id/action_feedbackFragment_to_sessionHistoryFragment"
+            app:destination="@id/sessionHistoryFragment" />
+    </fragment>
 </navigation>

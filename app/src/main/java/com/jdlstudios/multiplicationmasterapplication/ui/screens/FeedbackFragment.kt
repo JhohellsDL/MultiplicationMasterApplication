@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
@@ -51,6 +52,9 @@ class FeedbackFragment : Fragment() {
             feedbackViewModel.getListExercises(it.sessionId)
         }
 
+        binding.restartButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_feedbackFragment_to_sessionHistoryFragment)
+        }
         return binding.root
     }
 

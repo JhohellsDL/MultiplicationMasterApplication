@@ -233,9 +233,9 @@
 
         <Button
             android:id="@+id/restart_button"
-            android:backgroundTint="@color/colorPrimary"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
             android:text="Comenzar"
             android:fontFamily="@font/comfortaa"
             android:textColor="@color/colorTextPrimary"
