@@ -6,7 +6,7 @@
     <string name="app_title_home">Bienvenido a MultiMath Trainer!</string>
     <string name="historial">Historial</string>
     <string name="practicar">Practicar</string>
-    <string name="imagen_home">Imagen home</string>
+    <string name="image_home">Imagen home</string>
     <string name="selected_difficulty_text">Selecciona el nivel de dificultad</string>
     <string name="facil_text">Fácil</string>
     <string name="intermedio_text">Intermedio</string>
@@ -17,4 +17,7 @@
     <string name="sign">x</string>
     <string name="cantidad_ejercicios">Cantidad Ejercicios</string>
     <string name="ejercicios_restantes">Ejercicios restantes</string>
+    <string name="inicio">Inicio</string>
+    <string name="eliminar_todos_los_datos">Eliminar todos los datos</string>
+    <string name="incorrectas">Incorrectas</string>
 </resources>

@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ImageContrastCheck"
-            android:contentDescription="@string/imagen_home" />
+            android:contentDescription="@string/image_home" />
 
         <TextView
             android:id="@+id/text_name_app"

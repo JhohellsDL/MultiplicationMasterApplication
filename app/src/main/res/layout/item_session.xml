@@ -12,7 +12,7 @@
         android:layout_margin="12dp"
         android:translationZ="4dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="2dp"
+        app:cardElevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,16 +21,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/backgroundSecondary"
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/text_difficulty"
+                android:id="@+id/text_session_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/comfortaa"
-                android:textColor="@color/colorTextPrimary"
+                android:textColor="@color/colorTextPrimary2"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,19 +44,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa"
                 android:paddingTop="4dp"
-                android:textColor="@color/colorTextPrimary"
+                android:textColor="@color/colorTextPrimary2"
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_difficulty"
+                app:layout_constraintTop_toBottomOf="@id/text_session_difficulty"
                 tools:text="Correctas" />
 
             <TextView
                 android:id="@+id/correct_session_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:fontFamily="@font/comfortaa"
                 android:paddingTop="4dp"
-                android:textColor="@color/colorTextPrimary"
+                android:textColor="@color/colorTextPrimary2"
                 android:textSize="11sp"
                 app:layout_constraintStart_toEndOf="@id/correct_textview_label"
                 app:layout_constraintTop_toTopOf="@id/correct_textview_label"
@@ -68,19 +69,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa"
                 android:paddingTop="4dp"
-                android:textColor="@color/colorTextPrimary"
+                android:text="@string/incorrectas"
+                android:textColor="@color/colorTextPrimary2"
                 android:textSize="11sp"
-                android:text="Incorrectas"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_difficulty" />
+                app:layout_constraintTop_toBottomOf="@id/text_session_difficulty" />
 
             <TextView
-                android:id="@+id/incorrect_textview"
+                android:id="@+id/incorrect_session_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/comfortaa"
                 android:paddingTop="4dp"
-                android:textColor="@color/colorTextPrimary"
+                android:textColor="@color/colorTextPrimary2"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@id/incorrect_textview_label"
                 app:layout_constraintTop_toTopOf="@id/incorrect_textview_label"
@@ -90,15 +92,15 @@
                 android:id="@+id/progress_bar_correct_incorrect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:indicatorColor="@color/accent3"
-                app:trackThickness="8dp"
-                app:trackCornerRadius="4dp"
-                app:trackColor="@color/accent1"
                 android:layout_marginTop="8dp"
                 android:progress="80"
+                app:indicatorColor="@color/accent3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/correct_session_textview" />
+                app:layout_constraintTop_toBottomOf="@id/correct_session_textview"
+                app:trackColor="@color/accent1"
+                app:trackCornerRadius="3dp"
+                app:trackThickness="6dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -114,22 +116,22 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/image_icon_time"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:tint="@color/accent3"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/baseline_calendar"
+                        android:tint="@color/colorPrimaryDark"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
                     <TextView
-                        android:id="@+id/time_textview"
+                        android:id="@+id/date_session_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/comfortaa"
                         android:paddingTop="4dp"
-                        android:textColor="@color/colorTextPrimary"
+                        android:textColor="@color/colorTextPrimary2"
                         android:textSize="11sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,21 +153,21 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/image_icon_score"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/baseline_score"
-                        android:tint="@color/accent3"
+                        android:tint="@color/colorPrimaryDark"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/score_textview"
+                        android:id="@+id/score_session_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/comfortaa"
                         android:paddingTop="4dp"
-                        android:textColor="@color/colorTextPrimary"
+                        android:textColor="@color/colorTextPrimary2"
                         android:textSize="11sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -187,26 +189,26 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/image_icon_number_exercises"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:tint="@color/accent3"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/baseline_numbers"
+                        android:tint="@color/colorPrimaryDark"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/number_exercises_textview"
+                        android:id="@+id/number_exercises_session_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/comfortaa"
                         android:paddingTop="4dp"
-                        android:textColor="@color/colorTextPrimary"
+                        android:textColor="@color/colorTextPrimary2"
                         android:textSize="11sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/image_icon_number_exercises"
-                        tools:text="120 pts" />
+                        tools:text="120 exercises" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
