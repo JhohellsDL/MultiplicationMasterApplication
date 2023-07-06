@@ -99,6 +99,7 @@ class ExercisesIntermediateFragment : Fragment() {
         }
 
         binding.submitButton2.setOnClickListener {
+
             val a1 = binding.answerEdittext.text.toString().toInt()
             val a2 = binding.answerEdittext2.text.toString().toInt()
 
@@ -165,6 +166,8 @@ class ExercisesIntermediateFragment : Fragment() {
                     listOf<EditText>(binding.answerEdittext, binding.answerEdittext2)
                 setupSingleDigitInput(editTextList)
             }
+
+            binding.answerEdittext.requestFocus()
         }
 
         binding.answerEdittext.addTextChangedListener(object : TextWatcher {
