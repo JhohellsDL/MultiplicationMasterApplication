@@ -55,9 +55,6 @@ class ExercisesIntermediateFragment : Fragment() {
             )
         }
 
-        val editTextList = listOf<EditText>(binding.answerEdittext, binding.answerEdittext2)
-        setupSingleDigitInput(editTextList)
-
         exercisesViewModel.currentSession.observe(viewLifecycleOwner) {
             currentSession = it
             exercisesViewModel.setListExercises(
@@ -80,6 +77,23 @@ class ExercisesIntermediateFragment : Fragment() {
                 binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
                 binding.exerciseTextview.text = currentExercise!!.operand1.toString()
                 binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
+
+                val op1 = currentExercise!!.operand1.toString().toInt() % 10
+                val op2 = currentExercise!!.operand2.toString().toInt()
+
+                Log.i("asd", "valores : $op1 - $op2")
+                if ((op1 * op2) > 10) {
+                    val editTextList = listOf<EditText>(
+                        binding.answerEdittext,
+                        binding.llevaditaEdittext,
+                        binding.answerEdittext2
+                    )
+                    setupSingleDigitInput(editTextList)
+                } else {
+                    val editTextList =
+                        listOf<EditText>(binding.answerEdittext, binding.answerEdittext2)
+                    setupSingleDigitInput(editTextList)
+                }
             }
 
         }
@@ -123,7 +137,8 @@ class ExercisesIntermediateFragment : Fragment() {
                     getScore(numberTotalExercise, numberCorrects)
                 )
                 exercisesViewModel.updateSession()
-                it.findNavController().navigate(R.id.action_exercisesIntermediateFragment_to_feedbackFragment)
+                it.findNavController()
+                    .navigate(R.id.action_exercisesIntermediateFragment_to_feedbackFragment)
             } else {
                 numberExercise++
                 Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
@@ -133,6 +148,23 @@ class ExercisesIntermediateFragment : Fragment() {
             binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
             binding.exerciseTextview.text = currentExercise!!.operand1.toString()
             binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
+
+            val op1 = currentExercise!!.operand1.toString().toInt() % 10
+            val op2 = currentExercise!!.operand2.toString().toInt()
+
+            Log.i("asd", "valores : $op1 - $op2")
+            if ((op1 * op2) > 10) {
+                val editTextList = listOf<EditText>(
+                    binding.answerEdittext,
+                    binding.llevaditaEdittext,
+                    binding.answerEdittext2
+                )
+                setupSingleDigitInput(editTextList)
+            } else {
+                val editTextList =
+                    listOf<EditText>(binding.answerEdittext, binding.answerEdittext2)
+                setupSingleDigitInput(editTextList)
+            }
         }
 
         binding.answerEdittext.addTextChangedListener(object : TextWatcher {
