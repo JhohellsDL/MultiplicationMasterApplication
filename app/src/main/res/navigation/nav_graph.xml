@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_configurationExercisesFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
+        <action
+            android:id="@+id/action_configurationExercisesFragment_to_exercisesIntermediateFragment"
+            app:destination="@id/exercisesIntermediateFragment" />
     </fragment>
     <fragment
         android:id="@+id/sessionHistoryFragment"
@@ -48,5 +51,14 @@
         <action
             android:id="@+id/action_feedbackFragment_to_sessionHistoryFragment"
             app:destination="@id/sessionHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exercisesIntermediateFragment"
+        android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.ExercisesIntermediateFragment"
+        android:label="fragment_exercises_intermediate"
+        tools:layout="@layout/fragment_exercises_intermediate" >
+        <action
+            android:id="@+id/action_exercisesIntermediateFragment_to_feedbackFragment"
+            app:destination="@id/feedbackFragment" />
     </fragment>
 </navigation>

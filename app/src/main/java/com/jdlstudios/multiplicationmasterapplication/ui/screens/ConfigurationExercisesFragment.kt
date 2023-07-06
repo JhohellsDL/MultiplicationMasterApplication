@@ -100,8 +100,14 @@ class ConfigurationExercisesFragment : Fragment() {
                 configurationViewModel.insertSession()
 
                 if (quantityExercises > 0) {
-                    it.findNavController()
-                        .navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+                    if (getSelectedDifficulty().ordinal == 0) {
+                        it.findNavController()
+                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+                    } else if (getSelectedDifficulty().ordinal == 1) {
+                        it.findNavController()
+                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesIntermediateFragment)
+                    }
+
                 } else {
                     Snackbar.make(
                         binding.root,
@@ -119,8 +125,10 @@ class ConfigurationExercisesFragment : Fragment() {
         }
         return binding.root
     }
+
     private fun hideKeyboard(editText: EditText) {
-        val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 

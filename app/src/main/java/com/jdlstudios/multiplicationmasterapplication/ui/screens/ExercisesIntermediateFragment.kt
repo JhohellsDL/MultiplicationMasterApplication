@@ -1,30 +1,32 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
-import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
+import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesIntermediateBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModelFactory
 
-class ExercisesFragment : Fragment() {
+class ExercisesIntermediateFragment : Fragment() {
 
-    private lateinit var binding: FragmentExercisesBinding
+    private lateinit var binding: FragmentExercisesIntermediateBinding
+
     private var currentSession: SessionEntity? = null
     private var newListExercises: List<Exercise> = mutableListOf()
 
@@ -39,12 +41,11 @@ class ExercisesFragment : Fragment() {
     private var answerUser: Int = 0
     private var isCorrect: Boolean = false
 
-    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentExercisesBinding.inflate(inflater)
+        binding = FragmentExercisesIntermediateBinding.inflate(inflater)
 
         val application = requireNotNull(this.activity).applicationContext
         val exercisesViewModel: ExercisesViewModel by viewModels {
@@ -53,6 +54,9 @@ class ExercisesFragment : Fragment() {
                 application.exerciseRepository
             )
         }
+
+        val editTextList = listOf<EditText>(binding.answerEdittext, binding.answerEdittext2)
+        setupSingleDigitInput(editTextList)
 
         exercisesViewModel.currentSession.observe(viewLifecycleOwner) {
             currentSession = it
@@ -76,21 +80,26 @@ class ExercisesFragment : Fragment() {
                 binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
                 binding.exerciseTextview.text = currentExercise!!.operand1.toString()
                 binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
-
             }
-
-            Log.i("asd", "newListExercises!!!: $newListExercises")
 
         }
 
         binding.submitButton2.setOnClickListener {
-            answerUser = binding.answerEdittext.text.toString().toInt()
+            val a1 = binding.answerEdittext.text.toString().toInt()
+            val a2 = binding.answerEdittext2.text.toString().toInt()
+
+            answerUser = (a2 * 10) + a1
+
             binding.answerEdittext.text.clear()
+            binding.answerEdittext2.text.clear()
+            binding.llevaditaEdittext.text.clear()
+
             val answer = currentExercise!!.answer
+            Log.i("asd", "Exercise for add: $answer - $answerUser")
             if (answer == answerUser) {
                 isCorrect = true
                 numberCorrects++
-            }else{
+            } else {
                 isCorrect = false
                 numberIncorrects++
             }
@@ -108,9 +117,13 @@ class ExercisesFragment : Fragment() {
             exercisesViewModel.insertExercise()
 
             if (numberExercise == newListExercises.size - 1) {
-                exercisesViewModel.sessionForUpdate(numberCorrects, numberIncorrects, getScore(numberTotalExercise, numberCorrects))
+                exercisesViewModel.sessionForUpdate(
+                    numberCorrects,
+                    numberIncorrects,
+                    getScore(numberTotalExercise, numberCorrects)
+                )
                 exercisesViewModel.updateSession()
-                it.findNavController().navigate(R.id.action_exercisesFragment_to_feedbackFragment)
+                it.findNavController().navigate(R.id.action_exercisesIntermediateFragment_to_feedbackFragment)
             } else {
                 numberExercise++
                 Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
@@ -132,96 +145,13 @@ class ExercisesFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Observar el ViewModel para saber cuál es el ejercicio seleccionado
-        /*exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-            starExercise(it)
-        }
 
-        // Habilitar el botón de enviar respuesta solamente si el campo de texto no está vacío y contiene un número válido
-
-
-        // Acción al presionar el botón de enviar respuesta
-        binding.submitButton.setOnClickListener {
-
-            // Obtener la respuesta ingresada por el usuario
-            val answer = binding.answerEdittext.text.toString().toInt()
-
-            // Verificar si la respuesta es correcta y almacenar el ejercicio en la lista de ejercicios realizados
-            val correct = exercisesViewModel.exerciseNew.value?.let {
-                exercisesViewModel.checkAnswer(
-                    answer,
-                    it
-                )
-            }
-            correct?.let {
-                saveExercise(it)
-            }
-
-            // Ir al siguiente ejercicio y actualizar la pantalla
-            exercisesViewModel.nextItem()
-            exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-                starExercise(it)
-            }
-
-            // Verificar si ya se completaron todos los ejercicios y mostrar un mensaje de finalización
-            exercisesViewModel.completeExercise()
-            binding.quantityExercisesRemainingTextview.text =
-                exercisesViewModel.getRemainingExercises().toString()
-
-            // Mostrar el resultado de la respuesta del usuario
-            correct?.let {
-                showUserAnswerResult(it)
-            }
-
-            // Limpiar el campo de texto y verificar si se completaron todos los ejercicios
-            binding.answerEdittext.text.clear()
-            Log.i("sum", "ListaNew: $newListExercises")
-            exercisesViewModel.stateFinish.observe(viewLifecycleOwner) {
-                if (it) {
-                    Toast.makeText(requireContext(), "¡Terminaste!", Toast.LENGTH_SHORT).show()
-                    binding.answerEdittext.isEnabled = false
-                }
-            }
-        }
-        return binding.root
-    }
-
-    private fun starExercise(currentPosition: Int) {
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
-            binding.exerciseTextview.text = it[currentPosition].toString()
-            exercisesViewModel.setExerciseNew(it[currentPosition])
-        }
-    }
-
-    private fun saveExercise(correct: Boolean) {
-        val exerciseNew = exercisesViewModel.exerciseNew.value
-        if (exerciseNew != null) {
-            exerciseNew.correct = correct
-        }
-        exerciseNew?.let { newListExercises.add(it) }
-    }
-
-    private fun showUserAnswerResult(correct: Boolean) {
-        if (correct) {
-            binding.feedbackTextview.text = "Respuesta correcta!"
-        } else {
-            binding.feedbackTextview.text = "Respuesta incorrecta!"
-        }
-    }
-
-    private fun updateExercisesList(difficultyExercises: Difficulty, quantity: Int) {
-        exercisesViewModel.setListExercises(difficultyExercises, quantity)
-    }
-
-    private fun isAnswerValid(answer: String): Boolean {
-        return answer.isNotBlank() && answer.toIntOrNull() != null
-    }*/
         return binding.root
     }
 
     private fun getScore(numberTotalExercise: Int, numberCorrects: Int): Int {
         var score: Int = 0
-        score = (100*numberCorrects)/numberTotalExercise
+        score = (100 * numberCorrects) / numberTotalExercise
         return score
     }
 
@@ -245,4 +175,40 @@ class ExercisesFragment : Fragment() {
     private fun isAnswerValid(answer: String): Boolean {
         return answer.isNotBlank() && answer.toIntOrNull() != null
     }
+
+    private fun setupSingleDigitInput(editTextList: List<EditText>) {
+        for (i in editTextList.indices) {
+            val editText = editTextList[i]
+            if (i < editTextList.size - 1) {
+                editText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(1))
+                editText.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        if (s?.length == 1) {
+                            editTextList[i + 1].requestFocus()
+                        }
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        // No se utiliza
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        // No se utiliza
+                    }
+                })
+            }
+        }
+    }
+
+
 }
