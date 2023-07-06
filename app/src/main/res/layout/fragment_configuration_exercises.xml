@@ -122,7 +122,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/backgroundPrimary"
+                android:background="@color/backgroundSecondary"
                 android:padding="16dp">
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -144,26 +144,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:stepSize="10"
-                    android:value="40"
+                    android:stepSize="5"
                     android:valueTo="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/app_description"
                     app:layout_constraintTop_toBottomOf="@id/switch_number_exercises" />
 
                 <EditText
                     android:id="@+id/selected_exercise_amount_edit_text"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:backgroundTint="@color/accent1"
                     android:fontFamily="@font/comfortaa"
                     android:gravity="center"
-                    android:hint="10"
+                    android:hint="@string/cero"
                     android:inputType="number"
                     android:paddingTop="8dp"
                     android:textColor="@color/text"
-                    android:textSize="18sp"
+                    android:textColorHint="@color/colorTextSecondary2"
+                    android:textSize="24sp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/switch_number_exercises"
                     app:layout_constraintStart_toStartOf="parent"
@@ -171,16 +172,18 @@
 
                 <TextView
                     android:id="@+id/selected_exercise_amount"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="55dp"
+                    android:layout_height="56dp"
                     android:fontFamily="@font/comfortaa"
                     android:gravity="center"
+                    android:text="@string/cero"
                     android:textColor="@color/text"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/switch_number_exercises"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/switch_number_exercises"
-                    tools:text="10" />
+                    app:layout_constraintTop_toTopOf="@id/switch_number_exercises" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -191,7 +194,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:text="Comenzar"
+            android:text="@string/comenzar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

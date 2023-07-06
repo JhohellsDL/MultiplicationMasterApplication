@@ -20,4 +20,6 @@
     <string name="inicio">Inicio</string>
     <string name="eliminar_todos_los_datos">Eliminar todos los datos</string>
     <string name="incorrectas">Incorrectas</string>
+    <string name="correctas">Correctas</string>
+    <string name="comenzar">Comenzar</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
@@ -41,6 +42,7 @@ class SessionHistoryFragment : Fragment() {
             Log.i("asd","lista actual de ejercicios - $it")
             binding.recyclerView.adapter = adapter
         }
+
 
         return binding.root
     }

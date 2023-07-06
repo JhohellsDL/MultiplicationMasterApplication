@@ -44,11 +44,11 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa"
                 android:paddingTop="4dp"
+                android:text="@string/correctas"
                 android:textColor="@color/colorTextPrimary2"
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_session_difficulty"
-                tools:text="Correctas" />
+                app:layout_constraintTop_toBottomOf="@id/text_session_difficulty" />
 
             <TextView
                 android:id="@+id/correct_session_textview"

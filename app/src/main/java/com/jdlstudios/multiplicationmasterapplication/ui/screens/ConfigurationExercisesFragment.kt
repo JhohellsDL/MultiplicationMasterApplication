@@ -1,13 +1,16 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
+import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.RadioButton
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -15,8 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
-import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
+import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentConfigurationExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ConfigurationExercisesViewModel
@@ -34,23 +37,33 @@ class ConfigurationExercisesFragment : Fragment() {
     ): View {
         binding = FragmentConfigurationExercisesBinding.inflate(inflater)
 
-        //--------------------------------- Para el VIEWMODEL --------------------------------------------------------------
         val application = requireNotNull(this.activity).applicationContext
-
         val configurationViewModel: ConfigurationExercisesViewModel by viewModels {
             ConfigurationExercisesViewModelFactory((application as MultiplicationApplication).sessionRepository)
         }
-        //-------------------------------------------------------------------------------------------------------------------
 
         getValorSlider()
 
         binding.switchNumberExercises.isChecked = true
-        binding.switchNumberExercises.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.switchNumberExercises.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 onSlider()
+                hideKeyboard(binding.selectedExerciseAmountEditText)
+                if (binding.selectedExerciseAmountEditText.text.toString().isNotEmpty()) {
+                    binding.selectedExerciseAmount.text =
+                        binding.selectedExerciseAmountEditText.text.toString()
+                } else {
+                    binding.selectedExerciseAmount.text = "0"
+                }
                 stateSwitch = 1
             } else {
                 onEditText()
+                if (binding.selectedExerciseAmountEditText.text.toString().isNotEmpty()) {
+                    binding.selectedExerciseAmount.text =
+                        binding.selectedExerciseAmountEditText.text.toString()
+                } else {
+                    binding.selectedExerciseAmount.text = "0"
+                }
                 stateSwitch = 0
             }
         }
@@ -62,15 +75,20 @@ class ConfigurationExercisesFragment : Fragment() {
 
         binding.selectedExerciseAmountEditText.setOnClickListener {
 
+            if (binding.selectedExerciseAmount.text.toString().toInt() != 0) {
+                binding.selectedExerciseAmountEditText.setText(binding.selectedExerciseAmount.text.toString())
+            }
+
             Toast.makeText(requireContext(), "hiciste click", Toast.LENGTH_SHORT).show()
             if (binding.selectedExerciseAmountEditText.text.toString().isNotEmpty()) {
                 quantityExercises =
                     binding.selectedExerciseAmountEditText.text.toString().toInt()
                 binding.startButton.isEnabled = true
             } else {
-                binding.selectedExerciseAmountEditText.setError("Ingresa un valor")
+                binding.selectedExerciseAmountEditText.error = "Ingresa un valor"
             }
         }
+        hideKeyboardOnEnterPress(binding.selectedExerciseAmountEditText)
 
         binding.startButton.setOnClickListener {
             getQuantityExercises()
@@ -101,23 +119,47 @@ class ConfigurationExercisesFragment : Fragment() {
         }
         return binding.root
     }
+    private fun hideKeyboard(editText: EditText) {
+        val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(editText.windowToken, 0)
+    }
+
+    private fun hideKeyboardOnEnterPress(editText: EditText) {
+        editText.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+            ) {
+                val imm =
+                    editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                if (binding.selectedExerciseAmountEditText.text.toString().isNotEmpty()) {
+                    quantityExercises =
+                        binding.selectedExerciseAmountEditText.text.toString().toInt()
+                    binding.startButton.isEnabled = true
+                } else {
+                    binding.selectedExerciseAmountEditText.error = "Ingresa un valor"
+                    binding.startButton.isEnabled = false
+                }
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+    }
 
     private fun getValorSlider() {
         binding.sliderQuantity.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: Slider) {
                 binding.startButton.isEnabled = true
-                // Responds to when slider's touch event is being started
             }
 
             override fun onStopTrackingTouch(slider: Slider) {
-                // Responds to when slider's touch event is being stopped
             }
         })
-        binding.sliderQuantity.addOnChangeListener { slider, value, fromUser ->
-            // Responds to when slider's value is changed
+        binding.sliderQuantity.addOnChangeListener { _, value, _ ->
             if (value > 0) {
                 binding.selectedExerciseAmount.text = value.toInt().toString()
             } else {
+                binding.selectedExerciseAmount.text = value.toInt().toString()
                 binding.startButton.isEnabled = false
             }
         }
@@ -141,7 +183,6 @@ class ConfigurationExercisesFragment : Fragment() {
     private fun getQuantityExercises(): Int {
         if (stateSwitch == 1) {
             quantityExercises = binding.selectedExerciseAmount.text.toString().toFloat().toInt()
-            Log.i("asd", "quantityExercises! 1 :--- $quantityExercises")
         } else {
             if (binding.selectedExerciseAmountEditText.text.toString().isNotEmpty()) {
                 quantityExercises =
@@ -151,7 +192,6 @@ class ConfigurationExercisesFragment : Fragment() {
                 binding.selectedExerciseAmountEditText.error = "Ingresa un valor"
                 binding.startButton.isEnabled = true
             }
-            Log.i("asd", "quantityExercises! 0 :--- $quantityExercises")
         }
         return quantityExercises
     }
