@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
@@ -38,12 +39,17 @@ class SessionHistoryFragment : Fragment() {
         }
 
         sessionHistoryViewModel.listSession.observe(viewLifecycleOwner){
-            adapter.data = it
-            Log.i("asd","lista actual de ejercicios - $it")
+            adapter.data = it.reversed()
             binding.recyclerView.adapter = adapter
         }
 
+        binding.constraintHome.setOnClickListener {
+            it.findNavController().navigate(R.id.action_sessionHistoryFragment_to_homeFragment)
+        }
 
+        binding.constraintPractice.setOnClickListener {
+            it.findNavController().navigate(R.id.action_sessionHistoryFragment_to_configurationExercisesFragment)
+        }
         return binding.root
     }
 

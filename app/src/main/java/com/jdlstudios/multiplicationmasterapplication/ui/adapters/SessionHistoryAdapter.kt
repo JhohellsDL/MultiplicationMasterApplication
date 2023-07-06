@@ -1,13 +1,17 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.adapters
 
+import android.util.Log
+import java.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
+import java.util.Date
 
 class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHolder>() {
 
@@ -23,6 +27,7 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
         private val scoreText: TextView = itemView.findViewById(R.id.score_session_textview)
         private val exercisesText: TextView =
             itemView.findViewById(R.id.number_exercises_session_textview)
+        private val progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar_session_correct_incorrect)
 
         fun bind(
             item: SessionEntity
@@ -30,9 +35,15 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
             answerCorrects.text = item.correctAnswers.toString()
             answerIncorrects.text = item.incorrectAnswers.toString()
             difficultyText.text = Difficulty.getDifficultyFromInt(item.difficulty).toString()
-            dateText.text = item.timestamp.toString()
-            scoreText.text = String.format("%d pts", item.score)
+            progressBar.progress = item.score
+            scoreText.text = String.format("%d / 100 pts", item.score)
             exercisesText.text = String.format("%d exercises", item.numberOfExercises)
+
+            val currentTimeMillis = item.timestamp
+            val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+            val dateString = dateFormat.format(Date(currentTimeMillis))
+
+            dateText.text = dateString
         }
 
         companion object {

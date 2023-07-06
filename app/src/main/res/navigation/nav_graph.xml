@@ -33,7 +33,14 @@
         android:id="@+id/sessionHistoryFragment"
         android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.SessionHistoryFragment"
         android:label="fragment_session_history"
-        tools:layout="@layout/fragment_session_history" />
+        tools:layout="@layout/fragment_session_history" >
+        <action
+            android:id="@+id/action_sessionHistoryFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_sessionHistoryFragment_to_configurationExercisesFragment"
+            app:destination="@id/configurationExercisesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/exercisesFragment"
         android:name="com.jdlstudios.multiplicationmasterapplication.ui.screens.ExercisesFragment"

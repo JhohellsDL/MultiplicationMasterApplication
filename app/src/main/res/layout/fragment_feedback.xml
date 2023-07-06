@@ -45,6 +45,19 @@
                     tools:text="Intermedio" />
 
                 <TextView
+                    android:id="@+id/time_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa"
+                    android:paddingTop="4dp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_difficulty"
+                    tools:text="jueves, 06 julio 2023 15:30:45" />
+
+                <TextView
                     android:id="@+id/correct_textview_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,21 +65,21 @@
                     android:paddingTop="8dp"
                     android:text="Correctas"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_difficulty" />
+                    app:layout_constraintTop_toBottomOf="@id/time_textview" />
 
                 <TextView
                     android:id="@+id/correct_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
-                    android:paddingTop="4dp"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="11sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/correct_textview_label"
-                    tools:text="6 ejercicios" />
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/correct_textview_label"
+                    app:layout_constraintBottom_toBottomOf="@id/correct_textview_label"
+                    tools:text="6" />
 
                 <TextView
                     android:id="@+id/incorrect_textview_label"
@@ -78,19 +91,19 @@
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_difficulty" />
+                    app:layout_constraintTop_toBottomOf="@id/time_textview" />
 
                 <TextView
                     android:id="@+id/incorrect_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/comfortaa"
-                    android:paddingTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/incorrect_textview_label"
-                    tools:text="4 ejercicios" />
+                    app:layout_constraintEnd_toStartOf="@id/incorrect_textview_label"
+                    app:layout_constraintBottom_toBottomOf="@id/incorrect_textview_label"
+                    tools:text="4" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/progress_bar_correct_incorrect"
@@ -109,7 +122,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/progress_bar_correct_incorrect">
 
@@ -119,45 +132,9 @@
                         android:layout_weight="1">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/image_icon_time"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:tint="@color/accent3"
-                            android:src="@drawable/baseline_calendar"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/time_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/comfortaa"
-                            android:paddingTop="4dp"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="11sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/image_icon_time"
-                            tools:text="00:00:00" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View
-                        android:id="@+id/divider1"
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/accent3" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/image_icon_score"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/baseline_score"
                             android:tint="@color/accent3"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +152,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/image_icon_score"
-                            tools:text="120 pts" />
+                            tools:text="20 / 100 pts" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,8 +169,8 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/image_icon_number_exercises"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:tint="@color/accent3"
                             android:src="@drawable/baseline_numbers"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -236,7 +213,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Comenzar"
+            android:text="Finalizar"
             android:fontFamily="@font/comfortaa"
             android:textColor="@color/colorTextPrimary"
             app:layout_constraintBottom_toBottomOf="parent"

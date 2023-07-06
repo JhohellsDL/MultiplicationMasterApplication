@@ -41,10 +41,11 @@
         <LinearLayout
             android:id="@+id/linear_layout_button"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:baselineAligned="true"
             android:orientation="horizontal"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.cardview.widget.CardView
@@ -52,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -61,7 +63,6 @@
                         android:id="@+id/image_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:contentDescription="@string/image_home"
                         android:src="@drawable/baseline_home"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -82,8 +83,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_practice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -92,7 +93,6 @@
                     android:id="@+id/image_exercises"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:contentDescription="@string/practicar"
                     android:src="@drawable/baseline_fitness_center_24"
                     app:layout_constraintEnd_toEndOf="parent"

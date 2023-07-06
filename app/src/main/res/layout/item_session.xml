@@ -28,15 +28,25 @@
                 android:id="@+id/text_session_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:fontFamily="@font/comfortaa"
                 android:textColor="@color/colorTextPrimary2"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Intermedio" />
+
+            <TextView
+                android:id="@+id/date_session_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:paddingTop="4dp"
+                android:textColor="@color/colorTextPrimary2"
+                android:textSize="11sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="jueves, 06 julio 2023 15:30:45" />
 
             <TextView
                 android:id="@+id/correct_textview_label"
@@ -89,7 +99,7 @@
                 tools:text="4" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progress_bar_correct_incorrect"
+                android:id="@+id/progress_bar_session_correct_incorrect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -105,40 +115,9 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/progress_bar_correct_incorrect">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/image_icon_time"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/baseline_calendar"
-                        android:tint="@color/colorPrimaryDark"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/date_session_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/comfortaa"
-                        android:paddingTop="4dp"
-                        android:textColor="@color/colorTextPrimary2"
-                        android:textSize="11sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/image_icon_time"
-                        tools:text="dd/MM/yyyy" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/progress_bar_session_correct_incorrect">
 
                 <View
                     android:id="@+id/divider1"
@@ -172,7 +151,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/image_icon_score"
-                        tools:text="120 pts" />
+                        tools:text="20 / 100 pts" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,6 +16,8 @@ import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.adapters.FeedbackAdapter
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class FeedbackFragment : Fragment() {
 
@@ -38,17 +40,19 @@ class FeedbackFragment : Fragment() {
 
         feedbackViewModel.listExercises.observe(viewLifecycleOwner){
             adapter.data = it
-            Log.i("asd","lista actual de ejercicios - $it")
             binding.recyclerView.adapter = adapter
         }
 
         feedbackViewModel.currentSession.observe(viewLifecycleOwner){
             binding.textDifficulty.text = Difficulty.getDifficultyFromInt(it.difficulty).toString()
-            binding.correctTextview.text = "${it.correctAnswers} ejercicios"
-            binding.incorrectTextview.text = "${it.incorrectAnswers} ejercicios"
-            binding.timeTextview.text = it.timestamp.toString()
-            binding.scoreTextview.text = it.score.toString()
-            binding.numberExercisesTextview.text = it.numberOfExercises.toString()
+            binding.correctTextview.text = it.correctAnswers.toString()
+            binding.incorrectTextview.text = it.incorrectAnswers.toString()
+            val currentTimeMillis = it.timestamp
+            val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+            binding.timeTextview.text = dateFormat.format(Date(currentTimeMillis))
+            binding.scoreTextview.text = String.format("%d / 100 pts", it.score)
+            binding.progressBarCorrectIncorrect.progress = it.score
+            binding.numberExercisesTextview.text = String.format("%d Ejercicios", it.numberOfExercises)
             feedbackViewModel.getListExercises(it.sessionId)
         }
 
