@@ -17,6 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        //para cifer
         private const val DATABASE_NAME = "my_app_db"
 
         @Volatile
