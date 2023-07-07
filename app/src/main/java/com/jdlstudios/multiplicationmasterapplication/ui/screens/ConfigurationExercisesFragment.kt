@@ -101,11 +101,21 @@ class ConfigurationExercisesFragment : Fragment() {
 
                 if (quantityExercises > 0) {
                     if (getSelectedDifficulty().ordinal == 0) {
+                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
                         it.findNavController()
                             .navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
                     } else if (getSelectedDifficulty().ordinal == 1) {
+                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
                         it.findNavController()
                             .navigate(R.id.action_configurationExercisesFragment_to_exercisesIntermediateFragment)
+                    }else if (getSelectedDifficulty().ordinal == 2) {
+                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
+                        it.findNavController()
+                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesChallengingFragment)
+                    }else if (getSelectedDifficulty().ordinal == 3) {
+                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
+                        it.findNavController()
+                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesAdvancedFragment)
                     }
 
                 } else {
