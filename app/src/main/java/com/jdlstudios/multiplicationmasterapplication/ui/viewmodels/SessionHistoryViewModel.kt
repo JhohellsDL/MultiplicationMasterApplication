@@ -30,5 +30,11 @@ class SessionHistoryViewModel(
         }
     }
 
+    fun deleteAllSessions(){
+        viewModelScope.launch {
+            sessionRepositoryImpl.deleteAllSessions()
+        }
+    }
+
 
 }

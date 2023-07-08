@@ -7,5 +7,6 @@ interface SessionRepository {
     suspend fun saveSession(session: Session)
     suspend fun updateSession(session: SessionEntity)
     suspend fun getSessionBySessionId(sessionId: Long): Session
+    suspend fun deleteAllSessions()
 
 }

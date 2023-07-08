@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
@@ -50,7 +51,31 @@ class SessionHistoryFragment : Fragment() {
         binding.constraintPractice.setOnClickListener {
             it.findNavController().navigate(R.id.action_sessionHistoryFragment_to_configurationExercisesFragment)
         }
+
+        binding.deleteButton.setOnClickListener {
+            mostrarDialogoAlerta(sessionHistoryViewModel)
+        }
+
         return binding.root
     }
+
+
+    private fun mostrarDialogoAlerta(sessionHistoryViewModel: SessionHistoryViewModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Eliminar Datos")
+        builder.setMessage("Deseas eliminar todas la sesiones?")
+        builder.setPositiveButton("Aceptar") { dialog, _ ->
+            // Acción a realizar cuando se presiona el botón Aceptar
+            sessionHistoryViewModel.deleteAllSessions()
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            // Acción a realizar cuando se presiona el botón Cancelar
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
 }

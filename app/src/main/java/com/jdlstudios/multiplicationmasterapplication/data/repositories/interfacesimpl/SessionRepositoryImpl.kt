@@ -24,4 +24,8 @@ class SessionRepositoryImpl(
         return sessionDao.getSessionBySessionId(sessionId).toSession()
     }
 
+    override suspend fun deleteAllSessions() {
+        sessionDao.deleteAllSessions()
+    }
+
 }
