@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
@@ -22,6 +24,21 @@ import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHisto
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModelFactory
 
 class SessionHistoryFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_sessionHistoryFragment_to_homeFragment)
+            // Personaliza el comportamiento del botón "Atrás" aquí
+            // Puedes realizar acciones como mostrar un diálogo de confirmación, cerrar el fragmento o realizar otras operaciones.
+            // Para cerrar el fragmento, puedes utilizar el método popBackStack():
+            // requireActivity().supportFragmentManager.popBackStack()
+
+            // Si deseas mantener el comportamiento predeterminado del botón "Atrás" y solo realizar acciones adicionales, puedes llamar al método super.onBackPressed():
+            // super.onBackPressed()
+        }
+
+    }
 
     private lateinit var binding: FragmentSessionHistoryBinding
     override fun onCreateView(

@@ -15,7 +15,7 @@
     <color name="backgroundSecondary">#E7F1F9</color>
 
     <color name="accent1">#FF9800</color>
-    <color name="accent2">#E7856A</color>
+    <color name="accent2">#E77353</color>
     <color name="accent3">#FED502</color>
     <color name="accent4">#00FF7F</color>
 
@@ -46,5 +46,7 @@
     Barras de progreso:
     <color name="colorProgressBackground">#C0C0C0</color> (Gris claro)
     <color name="colorProgressBar">#00B140</color> (Verde esmeralda)
+
+    <color name="colorTransparent1">#CCFFFFFF</color>
 
 </resources>

@@ -23,4 +23,6 @@
     <string name="correctas">Correctas</string>
     <string name="comenzar">Comenzar</string>
     <string name="sing_2">+</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aceptar">Aceptar</string>
 </resources>

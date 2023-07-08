@@ -1,7 +1,12 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.icu.text.CaseMap.Title
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -12,7 +17,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -20,14 +27,17 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
+import com.jdlstudios.multiplicationmasterapplication.databinding.CardViewAlert1Binding
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentConfigurationExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ConfigurationExercisesViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ConfigurationExercisesViewModelFactory
+import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModel
 
 class ConfigurationExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentConfigurationExercisesBinding
+    private lateinit var bindingCard: CardViewAlert1Binding
     private var stateSwitch = 1
     private var quantityExercises: Int = 0
 
@@ -35,7 +45,9 @@ class ConfigurationExercisesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentConfigurationExercisesBinding.inflate(inflater)
+        bindingCard = CardViewAlert1Binding.inflate(inflater)
 
         val application = requireNotNull(this.activity).applicationContext
         val configurationViewModel: ConfigurationExercisesViewModel by viewModels {
@@ -102,8 +114,10 @@ class ConfigurationExercisesFragment : Fragment() {
                 if (quantityExercises > 0) {
                     if (getSelectedDifficulty().ordinal == 0) {
                         Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
-                        it.findNavController()
-                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+                        var title = Difficulty.getDifficultyToString(getSelectedDifficulty())
+                        mostrarCardAlert(it, "Sleccionaste estesos ejerciis seguro que quieres continuar no se podra volver atras na vez empieces", title)
+
+                        //it.findNavController().navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
                     } else if (getSelectedDifficulty().ordinal == 1) {
                         Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
                         it.findNavController()
@@ -134,6 +148,25 @@ class ConfigurationExercisesFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun mostrarCardAlert(it: View, message: String, title: String) {
+        bindingCard = CardViewAlert1Binding.inflate(layoutInflater)
+        val myDialog = Dialog(it.context)
+        myDialog.setContentView(bindingCard.root)
+        bindingCard.dialogTitle.text = title
+        bindingCard.dialogMessage.text = message
+        myDialog.setCancelable(true)
+        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        myDialog.show()
+
+        bindingCard.buttonPositive.setOnClickListener { cardView  ->
+            it.findNavController().navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+            myDialog.cancel()
+        }
+        bindingCard.buttonNegative.setOnClickListener {
+            myDialog.cancel()
+        }
     }
 
     private fun hideKeyboard(editText: EditText) {
@@ -221,5 +254,9 @@ class ConfigurationExercisesFragment : Fragment() {
             } ?: Difficulty.EASY
         }
     }
+
+    private fun mostrarDialogoAlerta() {
+    }
+
 }
 
