@@ -171,18 +171,32 @@ class ExercisesAdvancedFragment : Fragment() {
             binding.answerEdittext.requestFocus()
         }
 
-        binding.answerEdittext.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val isAnswerValid = isAnswerValid(s.toString())
-                binding.submitButton2.isVisible = isAnswerValid
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.answerEdittext.addTextChangedListener(textWatcher)
+        binding.answerEdittext2.addTextChangedListener(textWatcher)
+        binding.answerEdittext3.addTextChangedListener(textWatcher)
+        binding.answerEdittext4.addTextChangedListener(textWatcher)
+        binding.answerEdittext5.addTextChangedListener(textWatcher)
 
 
         return binding.root
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            val editText1Value = binding.answerEdittext.text.toString().trim()
+            val editText2Value = binding.answerEdittext2.text.toString().trim()
+            val editText3Value = binding.answerEdittext3.text.toString().trim()
+            val editText4Value = binding.answerEdittext4.text.toString().trim()
+            val editText5Value = binding.answerEdittext5.text.toString().trim()
+
+
+            binding.submitButton2.isVisible =
+                editText1Value.isNotEmpty() && editText2Value.isNotEmpty() && editText3Value.isNotEmpty() && editText4Value.isNotEmpty() && editText5Value.isNotEmpty()
+        }
     }
 
     private fun cleanAllEditText() {
@@ -218,6 +232,7 @@ class ExercisesAdvancedFragment : Fragment() {
         binding.llevaditaEdittext.isVisible = false
         binding.llevaditaEdittext2.isVisible = false
     }
+
     private fun getScore(numberTotalExercise: Int, numberCorrects: Int): Int {
         var score: Int = 0
         score = (100 * numberCorrects) / numberTotalExercise
