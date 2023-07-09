@@ -112,25 +112,11 @@ class ConfigurationExercisesFragment : Fragment() {
                 configurationViewModel.insertSession()
 
                 if (quantityExercises > 0) {
-                    if (getSelectedDifficulty().ordinal == 0) {
-                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
-                        var title = Difficulty.getDifficultyToString(getSelectedDifficulty())
-                        mostrarCardAlert(it, "Sleccionaste estesos ejerciis seguro que quieres continuar no se podra volver atras na vez empieces", title)
-
-                        //it.findNavController().navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
-                    } else if (getSelectedDifficulty().ordinal == 1) {
-                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
-                        it.findNavController()
-                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesIntermediateFragment)
-                    }else if (getSelectedDifficulty().ordinal == 2) {
-                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
-                        it.findNavController()
-                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesChallengingFragment)
-                    }else if (getSelectedDifficulty().ordinal == 3) {
-                        Log.i("asd","Diffculty: ${getSelectedDifficulty().ordinal}")
-                        it.findNavController()
-                            .navigate(R.id.action_configurationExercisesFragment_to_exercisesAdvancedFragment)
-                    }
+                    mostrarCardAlert(
+                        it,
+                        difficulty = Difficulty.getDifficultyToString(getSelectedDifficulty()),
+                        nroExercises = quantityExercises
+                    )
 
                 } else {
                     Snackbar.make(
@@ -150,18 +136,43 @@ class ConfigurationExercisesFragment : Fragment() {
         return binding.root
     }
 
-    private fun mostrarCardAlert(it: View, message: String, title: String) {
+    private fun mostrarCardAlert(it: View, difficulty: String, nroExercises: Int) {
         bindingCard = CardViewAlert1Binding.inflate(layoutInflater)
         val myDialog = Dialog(it.context)
         myDialog.setContentView(bindingCard.root)
-        bindingCard.dialogTitle.text = title
-        bindingCard.dialogMessage.text = message
+        bindingCard.dialogTitle.text = String.format("Dificultad: %s", difficulty)
+        bindingCard.dialogSubtitle.text = String.format("Numero de ejercicios: %s", nroExercises)
+        bindingCard.dialogMessage.text =
+            "Estás a punto de iniciar una sesión con la dificultad y un número determinado de ejercicios. ¿Estás seguro de continuar?"
         myDialog.setCancelable(true)
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         myDialog.show()
 
-        bindingCard.buttonPositive.setOnClickListener { cardView  ->
-            it.findNavController().navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+        bindingCard.buttonPositive.setOnClickListener { cardView ->
+
+            if (quantityExercises > 0) {
+                if (getSelectedDifficulty().ordinal == 0) {
+                    it.findNavController()
+                        .navigate(R.id.action_configurationExercisesFragment_to_exercisesFragment)
+                } else if (getSelectedDifficulty().ordinal == 1) {
+                    it.findNavController()
+                        .navigate(R.id.action_configurationExercisesFragment_to_exercisesIntermediateFragment)
+                } else if (getSelectedDifficulty().ordinal == 2) {
+                    it.findNavController()
+                        .navigate(R.id.action_configurationExercisesFragment_to_exercisesChallengingFragment)
+                } else if (getSelectedDifficulty().ordinal == 3) {
+                    it.findNavController()
+                        .navigate(R.id.action_configurationExercisesFragment_to_exercisesAdvancedFragment)
+                }
+
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    "La cantidad de ejercicios debe ser mayor a cero",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
             myDialog.cancel()
         }
         bindingCard.buttonNegative.setOnClickListener {
