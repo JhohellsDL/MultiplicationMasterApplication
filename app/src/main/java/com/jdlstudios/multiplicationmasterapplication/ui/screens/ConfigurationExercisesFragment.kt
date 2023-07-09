@@ -251,11 +251,8 @@ class ConfigurationExercisesFragment : Fragment() {
         return binding.difficultyGroup.checkedRadioButtonId.let { id ->
             binding.root.findViewById<RadioButton>(id)?.tag?.toString()?.let { tag ->
                 Difficulty.getDifficultyFromString(tag)
-            } ?: Difficulty.EASY
+            } ?: Difficulty.FACIL
         }
-    }
-
-    private fun mostrarDialogoAlerta() {
     }
 
 }

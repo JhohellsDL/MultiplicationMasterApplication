@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:tag="EASY"
+                        android:tag="FACIL"
                         android:text="@string/facil_text"
                         android:textColor="@color/textTitle" />
 
@@ -66,7 +66,7 @@
                         style="@style/Widget.App.RadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="INTERMEDIATE"
+                        android:tag="INTERMEDIO"
                         android:text="@string/intermedio_text"
                         android:textColor="@color/textTitle" />
 
@@ -75,7 +75,7 @@
                         style="@style/Widget.App.RadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="CHALLENGING"
+                        android:tag="DESAFIO"
                         android:text="@string/desafio_text"
                         android:textColor="@color/textTitle" />
 
@@ -84,7 +84,7 @@
                         style="@style/Widget.App.RadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="ADVANCED"
+                        android:tag="AVANZADO"
                         android:text="@string/avanzado_Text"
                         android:textColor="@color/textTitle" />
 

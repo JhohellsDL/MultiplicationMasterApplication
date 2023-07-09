@@ -8,10 +8,10 @@ class ExerciseProvider {
     companion object{
 
         private val difficultyLevels = mapOf(
-            Difficulty.EASY to Pair(0..9, 0..9),
-            Difficulty.INTERMEDIATE to Pair(10..99, 1..9),
-            Difficulty.CHALLENGING to Pair(100..999, 10..99),
-            Difficulty.ADVANCED to Pair(100..999, 100..999)
+            Difficulty.FACIL to Pair(0..9, 0..9),
+            Difficulty.INTERMEDIO to Pair(10..99, 1..9),
+            Difficulty.DESAFIO to Pair(100..999, 10..99),
+            Difficulty.AVANZADO to Pair(100..999, 100..999)
         )
 
         fun randomMultiplication(level: Difficulty): Exercise {
