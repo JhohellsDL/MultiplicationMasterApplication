@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,15 +13,18 @@
         android:translationZ="4dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="3dp"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/accent5"
+        android:backgroundTint="@color/backgroundPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_view_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundSecondary"
             android:padding="16dp">
 
             <TextView
@@ -119,12 +122,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/progress_bar_session_correct_incorrect">
 
-                <View
-                    android:id="@+id/divider1"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,6 +190,6 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

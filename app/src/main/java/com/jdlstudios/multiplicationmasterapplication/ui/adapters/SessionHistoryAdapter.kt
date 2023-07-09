@@ -7,7 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
@@ -28,22 +33,41 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
         private val exercisesText: TextView =
             itemView.findViewById(R.id.number_exercises_session_textview)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar_session_correct_incorrect)
+        private val cardView: MaterialCardView = itemView.findViewById(R.id.card_view_detail)
+        private val fondo: ConstraintLayout = itemView.findViewById(R.id.constraint_view_card)
 
         fun bind(
             item: SessionEntity
         ) {
-            answerCorrects.text = item.correctAnswers.toString()
-            answerIncorrects.text = item.incorrectAnswers.toString()
-            difficultyText.text = Difficulty.getDifficultyFromInt(item.difficulty).toString()
-            progressBar.progress = item.score
-            scoreText.text = String.format("%d / 100 pts", item.score)
-            exercisesText.text = String.format("%d exercises", item.numberOfExercises)
+            if (item.correctAnswers == 0 && item.incorrectAnswers == 0){
+                cardView.setStrokeColor(ContextCompat.getColor(itemView.context, R.color.accent5))
+                answerCorrects.text = item.correctAnswers.toString()
+                answerIncorrects.text = item.incorrectAnswers.toString()
+                difficultyText.text = "SESION INCOMPLETA"
+                progressBar.progress = 0
+                scoreText.text = String.format("%d / 100 pts", 0)
+                exercisesText.text = String.format("%d exercises", item.numberOfExercises)
 
-            val currentTimeMillis = item.timestamp
-            val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
-            val dateString = dateFormat.format(Date(currentTimeMillis))
+                val currentTimeMillis = item.timestamp
+                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+                val dateString = dateFormat.format(Date(currentTimeMillis))
 
-            dateText.text = dateString
+                dateText.text = dateString
+            }else {
+                cardView.setStrokeColor(ContextCompat.getColor(itemView.context, R.color.colorTextSecondary2))
+                answerCorrects.text = item.correctAnswers.toString()
+                answerIncorrects.text = item.incorrectAnswers.toString()
+                difficultyText.text = Difficulty.getDifficultyFromInt(item.difficulty).toString()
+                progressBar.progress = item.score
+                scoreText.text = String.format("%d / 100 pts", item.score)
+                exercisesText.text = String.format("%d exercises", item.numberOfExercises)
+
+                val currentTimeMillis = item.timestamp
+                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+                val dateString = dateFormat.format(Date(currentTimeMillis))
+
+                dateText.text = dateString
+            }
         }
 
         companion object {

@@ -1,6 +1,9 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,15 +11,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
+import com.jdlstudios.multiplicationmasterapplication.databinding.CardViewAlert1Binding
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
@@ -25,6 +31,8 @@ import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesVie
 class ExercisesFragment : Fragment() {
 
     private lateinit var binding: FragmentExercisesBinding
+    private lateinit var bindingCard: CardViewAlert1Binding
+
     private var currentSession: SessionEntity? = null
     private var newListExercises: List<Exercise> = mutableListOf()
 
@@ -38,6 +46,22 @@ class ExercisesFragment : Fragment() {
     private var numberIncorrects: Int = 0
     private var answerUser: Int = 0
     private var isCorrect: Boolean = false
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            mostrarCardAlert()
+            // Personaliza el comportamiento del botón "Atrás" aquí
+            // Puedes realizar acciones como mostrar un diálogo de confirmación, cerrar el fragmento o realizar otras operaciones.
+            // Para cerrar el fragmento, puedes utilizar el método popBackStack():
+            // requireActivity().supportFragmentManager.popBackStack()
+
+            // Si deseas mantener el comportamiento predeterminado del botón "Atrás" y solo realizar acciones adicionales, puedes llamar al método super.onBackPressed():
+            // super.onBackPressed()
+        }
+
+    }
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
@@ -132,90 +156,6 @@ class ExercisesFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Observar el ViewModel para saber cuál es el ejercicio seleccionado
-        /*exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-            starExercise(it)
-        }
-
-        // Habilitar el botón de enviar respuesta solamente si el campo de texto no está vacío y contiene un número válido
-
-
-        // Acción al presionar el botón de enviar respuesta
-        binding.submitButton.setOnClickListener {
-
-            // Obtener la respuesta ingresada por el usuario
-            val answer = binding.answerEdittext.text.toString().toInt()
-
-            // Verificar si la respuesta es correcta y almacenar el ejercicio en la lista de ejercicios realizados
-            val correct = exercisesViewModel.exerciseNew.value?.let {
-                exercisesViewModel.checkAnswer(
-                    answer,
-                    it
-                )
-            }
-            correct?.let {
-                saveExercise(it)
-            }
-
-            // Ir al siguiente ejercicio y actualizar la pantalla
-            exercisesViewModel.nextItem()
-            exercisesViewModel.selectedPosition.observe(viewLifecycleOwner) {
-                starExercise(it)
-            }
-
-            // Verificar si ya se completaron todos los ejercicios y mostrar un mensaje de finalización
-            exercisesViewModel.completeExercise()
-            binding.quantityExercisesRemainingTextview.text =
-                exercisesViewModel.getRemainingExercises().toString()
-
-            // Mostrar el resultado de la respuesta del usuario
-            correct?.let {
-                showUserAnswerResult(it)
-            }
-
-            // Limpiar el campo de texto y verificar si se completaron todos los ejercicios
-            binding.answerEdittext.text.clear()
-            Log.i("sum", "ListaNew: $newListExercises")
-            exercisesViewModel.stateFinish.observe(viewLifecycleOwner) {
-                if (it) {
-                    Toast.makeText(requireContext(), "¡Terminaste!", Toast.LENGTH_SHORT).show()
-                    binding.answerEdittext.isEnabled = false
-                }
-            }
-        }
-        return binding.root
-    }
-
-    private fun starExercise(currentPosition: Int) {
-        exercisesViewModel.listExercises.observe(viewLifecycleOwner) {
-            binding.exerciseTextview.text = it[currentPosition].toString()
-            exercisesViewModel.setExerciseNew(it[currentPosition])
-        }
-    }
-
-    private fun saveExercise(correct: Boolean) {
-        val exerciseNew = exercisesViewModel.exerciseNew.value
-        if (exerciseNew != null) {
-            exerciseNew.correct = correct
-        }
-        exerciseNew?.let { newListExercises.add(it) }
-    }
-
-    private fun showUserAnswerResult(correct: Boolean) {
-        if (correct) {
-            binding.feedbackTextview.text = "Respuesta correcta!"
-        } else {
-            binding.feedbackTextview.text = "Respuesta incorrecta!"
-        }
-    }
-
-    private fun updateExercisesList(difficultyExercises: Difficulty, quantity: Int) {
-        exercisesViewModel.setListExercises(difficultyExercises, quantity)
-    }
-
-    private fun isAnswerValid(answer: String): Boolean {
-        return answer.isNotBlank() && answer.toIntOrNull() != null
-    }*/
         return binding.root
     }
 
@@ -244,5 +184,24 @@ class ExercisesFragment : Fragment() {
 
     private fun isAnswerValid(answer: String): Boolean {
         return answer.isNotBlank() && answer.toIntOrNull() != null
+    }
+
+    private fun mostrarCardAlert() {
+        bindingCard = CardViewAlert1Binding.inflate(layoutInflater)
+        val myDialog = Dialog(requireContext())
+        myDialog.setContentView(bindingCard.root)
+        bindingCard.dialogTitle.text = "ADVERTENCIA "
+        bindingCard.dialogMessage.text = "SE perdera tu progreso"
+        myDialog.setCancelable(true)
+        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        myDialog.show()
+
+        bindingCard.buttonPositive.setOnClickListener { cardView  ->
+            findNavController().navigate(R.id.action_exercisesFragment_to_configurationExercisesFragment)
+            myDialog.cancel()
+        }
+        bindingCard.buttonNegative.setOnClickListener {
+            myDialog.cancel()
+        }
     }
 }
