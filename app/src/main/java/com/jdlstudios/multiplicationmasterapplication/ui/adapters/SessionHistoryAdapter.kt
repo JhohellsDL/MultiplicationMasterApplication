@@ -53,7 +53,21 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
                 val dateString = dateFormat.format(Date(currentTimeMillis))
 
                 dateText.text = dateString
-            }else {
+            } else if (item.incorrectAnswers != 0){
+                cardView.setStrokeColor(ContextCompat.getColor(itemView.context, R.color.accent3))
+                answerCorrects.text = item.correctAnswers.toString()
+                answerIncorrects.text = item.incorrectAnswers.toString()
+                difficultyText.text = Difficulty.getDifficultyFromInt(item.difficulty).toString()
+                progressBar.progress = 0
+                scoreText.text = String.format("%d / 100 pts", 0)
+                exercisesText.text = String.format("%d exercises", item.numberOfExercises)
+
+                val currentTimeMillis = item.timestamp
+                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+                val dateString = dateFormat.format(Date(currentTimeMillis))
+
+                dateText.text = dateString
+            } else {
                 cardView.setStrokeColor(ContextCompat.getColor(itemView.context, R.color.colorTextSecondary2))
                 answerCorrects.text = item.correctAnswers.toString()
                 answerIncorrects.text = item.incorrectAnswers.toString()

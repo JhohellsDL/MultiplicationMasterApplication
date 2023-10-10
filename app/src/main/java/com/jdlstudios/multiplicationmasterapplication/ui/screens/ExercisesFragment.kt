@@ -191,7 +191,7 @@ class ExercisesFragment : Fragment() {
         val myDialog = Dialog(requireContext())
         myDialog.setContentView(bindingCard.root)
         bindingCard.dialogTitle.text = "ADVERTENCIA "
-        bindingCard.dialogMessage.text = "SE perdera tu progreso"
+        bindingCard.dialogMessage.text = "Se perdera tu progreso"
         myDialog.setCancelable(true)
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         myDialog.show()

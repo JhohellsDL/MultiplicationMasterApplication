@@ -1,5 +1,8 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
+import com.jdlstudios.multiplicationmasterapplication.databinding.CardViewAlert1Binding
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentSessionHistoryBinding
 import com.jdlstudios.multiplicationmasterapplication.ui.adapters.FeedbackAdapter
@@ -22,8 +26,11 @@ import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackView
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModelFactory
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModelFactory
+import com.jdlstudios.multiplicationmasterapplication.utils.Utils
 
 class SessionHistoryFragment : Fragment() {
+
+    private lateinit var bindingCard: CardViewAlert1Binding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -70,7 +77,7 @@ class SessionHistoryFragment : Fragment() {
         }
 
         binding.deleteButton.setOnClickListener {
-            mostrarDialogoAlerta(sessionHistoryViewModel)
+            mostrarCardAlert(sessionHistoryViewModel)
         }
 
         return binding.root
@@ -92,6 +99,26 @@ class SessionHistoryFragment : Fragment() {
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun mostrarCardAlert(sessionHistoryViewModel: SessionHistoryViewModel) {
+        bindingCard = CardViewAlert1Binding.inflate(layoutInflater)
+        val myDialog = Dialog(requireContext())
+        myDialog.setContentView(bindingCard.root)
+        bindingCard.dialogTitle.text = "ELIMINAR DATOS "
+        bindingCard.dialogMessage.text = "Deseas eliminar todas la sesiones?"
+        myDialog.setCancelable(true)
+        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        myDialog.show()
+
+        bindingCard.buttonPositive.setOnClickListener {
+            sessionHistoryViewModel.deleteAllSessions()
+            Utils.SnackbarUtils.showSnackBar(it, "Historial eliminado")
+            myDialog.cancel()
+        }
+        bindingCard.buttonNegative.setOnClickListener {
+            myDialog.cancel()
+        }
     }
 
 
