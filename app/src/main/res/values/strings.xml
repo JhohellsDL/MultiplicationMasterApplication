@@ -25,4 +25,7 @@
     <string name="sing_2">+</string>
     <string name="cancelar">Cancelar</string>
     <string name="aceptar">Aceptar</string>
+
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
 </resources>
