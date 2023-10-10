@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Multiplication Master Application</string>
+    <string name="app_name">MultiMath Challenge</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_description">Entrena tus habilidades de multiplicación. Elige ejercicios y niveles de dificultad, verifica respuestas y obtén puntajes. ¡Conviértete en un maestro de la multiplicación!</string>
