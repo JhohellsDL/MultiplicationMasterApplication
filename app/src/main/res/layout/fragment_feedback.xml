@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundPrimary"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_detail"
@@ -73,12 +72,12 @@
                     android:id="@+id/correct_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/comfortaa"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="11sp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintStart_toEndOf="@id/correct_textview_label"
                     app:layout_constraintBottom_toBottomOf="@id/correct_textview_label"
+                    app:layout_constraintStart_toEndOf="@id/correct_textview_label"
                     tools:text="6" />
 
                 <TextView
@@ -97,27 +96,27 @@
                     android:id="@+id/incorrect_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/comfortaa"
                     android:layout_marginEnd="4dp"
+                    android:fontFamily="@font/comfortaa"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="11sp"
-                    app:layout_constraintEnd_toStartOf="@id/incorrect_textview_label"
                     app:layout_constraintBottom_toBottomOf="@id/incorrect_textview_label"
+                    app:layout_constraintEnd_toStartOf="@id/incorrect_textview_label"
                     tools:text="4" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/progress_bar_correct_incorrect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:indicatorColor="@color/accent3"
-                    app:trackThickness="8dp"
-                    app:trackCornerRadius="4dp"
-                    app:trackColor="@color/accent1"
                     android:layout_marginTop="8dp"
                     android:progress="80"
+                    app:indicatorColor="@color/accent3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/correct_textview" />
+                    app:layout_constraintTop_toBottomOf="@id/correct_textview"
+                    app:trackColor="@color/accent1"
+                    app:trackCornerRadius="4dp"
+                    app:trackThickness="8dp" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -160,7 +159,7 @@
                         android:id="@+id/divider2"
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
-                        android:background="@color/accent3"/>
+                        android:background="@color/accent3" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
@@ -171,8 +170,8 @@
                             android:id="@+id/image_icon_number_exercises"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:tint="@color/accent3"
                             android:src="@drawable/baseline_numbers"
+                            android:tint="@color/accent3"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -201,24 +200,78 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="56dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@id/restart_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_view_detail"
             tools:itemCount="40"
             tools:listitem="@layout/item_exercise" />
 
-        <Button
-            android:id="@+id/restart_button"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Finalizar"
-            android:fontFamily="@font/comfortaa"
-            android:textColor="@color/colorTextPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@drawable/gradient_white"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/restart_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_restart"
+                            android:tint="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/shared_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/accent3">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_share"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
