@@ -108,7 +108,7 @@ class ExercisesAdvancedFragment : Fragment() {
             val a2 = binding.answerEdittext2.text.toString().toInt()
             val a3 = binding.answerEdittext3.text.toString().toInt()
             val a4 = binding.answerEdittext4.text.toString().toInt()
-            val a5 = binding.answerEdittext4.text.toString().toInt()
+            val a5 = binding.answerEdittext5.text.toString().toInt()
 
 
             answerUser = (a5 * 10000) + (a4 * 1000) + (a3 * 100) + (a2 * 10) + a1
