@@ -12,16 +12,27 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-8897050281816485/2687938200"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/difficulty_exercises_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/comfortaa"
             android:textColor="@color/textTitle"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adView4"
             tools:text="Challenging" />
 
         <TextView
@@ -96,8 +107,8 @@
                     android:text="Activar ayuda para sumar  "
                     android:textColor="@color/textTitle"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:thumbTint="@color/colorButtonNormal"
                     app:trackTint="@color/accent1" />
 
@@ -144,7 +155,7 @@
                     android:textColorHint="@color/verde4"
                     android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@id/llevadita_edittext"
-                    app:layout_constraintTop_toBottomOf="@id/switch_help_add"/>
+                    app:layout_constraintTop_toBottomOf="@id/switch_help_add" />
 
                 <TextView
                     android:id="@+id/exercise_textview"
@@ -426,6 +437,7 @@
                     app:layout_constraintEnd_toStartOf="@id/answer_edittext2"
                     app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
                     tools:text="6" />
+
                 <EditText
                     android:id="@+id/answer_edittext4"
                     android:layout_width="wrap_content"

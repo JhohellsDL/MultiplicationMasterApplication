@@ -23,6 +23,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
@@ -48,6 +50,11 @@ class ConfigurationExercisesFragment : Fragment() {
 
         binding = FragmentConfigurationExercisesBinding.inflate(inflater)
         bindingCard = CardViewAlert1Binding.inflate(inflater)
+
+        MobileAds.initialize(requireContext()) {}
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView2.loadAd(adRequest)
 
         val application = requireNotNull(this.activity).applicationContext
         val configurationViewModel: ConfigurationExercisesViewModel by viewModels {

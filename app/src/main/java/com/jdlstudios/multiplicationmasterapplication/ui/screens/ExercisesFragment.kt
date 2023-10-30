@@ -18,6 +18,11 @@ import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
@@ -63,12 +68,31 @@ class ExercisesFragment : Fragment() {
 
     }
 
+    private var mInterstitialAd: InterstitialAd? = null
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater)
+
+        MobileAds.initialize(requireContext()) {}
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView3.loadAd(adRequest)
+
+
+        var adRequest2 = AdRequest.Builder().build()
+
+        InterstitialAd.load(requireContext(),"ca-app-pub-8897050281816485/6389162456", adRequest2, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+            }
+        })
 
         val application = requireNotNull(this.activity).applicationContext
         val exercisesViewModel: ExercisesViewModel by viewModels {
@@ -134,6 +158,11 @@ class ExercisesFragment : Fragment() {
             if (numberExercise == newListExercises.size - 1) {
                 exercisesViewModel.sessionForUpdate(numberCorrects, numberIncorrects, getScore(numberTotalExercise, numberCorrects))
                 exercisesViewModel.updateSession()
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(requireActivity())
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                }
                 it.findNavController().navigate(R.id.action_exercisesFragment_to_feedbackFragment)
             } else {
                 numberExercise++

@@ -12,18 +12,28 @@
         android:orientation="vertical"
         android:padding="32dp">
 
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-8897050281816485/2476965463"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/inicioImage"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="64dp"
+            android:contentDescription="@string/image_home"
             android:scaleType="fitCenter"
             android:src="@drawable/icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ImageContrastCheck"
-            android:contentDescription="@string/image_home" />
+            tools:ignore="ImageContrastCheck" />
 
         <TextView
             android:id="@+id/text_name_app"

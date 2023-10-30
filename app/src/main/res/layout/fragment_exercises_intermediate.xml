@@ -12,16 +12,27 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-8897050281816485/6580734141"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/difficulty_exercises_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/comfortaa"
             android:textColor="@color/textTitle"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adView6"
             tools:text="Intermediate" />
 
         <TextView
@@ -109,12 +120,12 @@
                     android:fontFamily="@font/comfortaa"
                     android:gravity="center"
                     android:hint="@string/cero"
-                    android:textColorHint="@color/verde4"
                     android:inputType="number"
                     android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@id/exercise_textview"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/exercise_textview"
@@ -122,10 +133,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
                     android:fontFamily="@font/comfortaa"
+                    android:letterSpacing="0.2"
                     android:textColor="@color/textTitle"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.2"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@id/llevadita_edittext"
                     tools:text="69" />
@@ -162,12 +173,13 @@
                     android:fontFamily="@font/comfortaa"
                     android:gravity="center"
                     android:hint="@string/cero"
-                    android:textColorHint="@color/verde4"
                     android:inputType="number"
                     android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintTop_toBottomOf="@id/divider_operation" />
+
                 <EditText
                     android:id="@+id/answer_edittext2"
                     android:layout_width="wrap_content"
@@ -177,9 +189,9 @@
                     android:fontFamily="@font/comfortaa"
                     android:gravity="center"
                     android:hint="@string/cero"
-                    android:textColorHint="@color/verde4"
                     android:inputType="number"
                     android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toStartOf="@id/answer_edittext"
                     app:layout_constraintTop_toBottomOf="@id/divider_operation" />
