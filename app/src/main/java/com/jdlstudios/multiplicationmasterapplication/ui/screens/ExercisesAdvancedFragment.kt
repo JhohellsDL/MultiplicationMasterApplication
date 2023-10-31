@@ -5,12 +5,12 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
@@ -18,8 +18,6 @@ import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesAdvancedBinding
-import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesChallengingBinding
-import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesIntermediateBinding
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ExercisesViewModelFactory
