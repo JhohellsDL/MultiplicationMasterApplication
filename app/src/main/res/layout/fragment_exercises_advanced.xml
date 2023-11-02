@@ -5,524 +5,493 @@
     tools:context=".ui.screens.ExercisesAdvancedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exercise_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundPrimary">
+        android:background="@color/backgroundPrimary"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/difficulty_exercises_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/textTitle"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Challenging" />
+
+        <TextView
+            android:id="@+id/quantity_exercises_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/cantidad_ejercicios"
+            android:textColor="@color/textBody"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_textview" />
+
+        <TextView
+            android:id="@+id/quantity_exercises_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/textTitle"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview"
+            tools:text="23" />
+
+        <TextView
+            android:id="@+id/quantity_exercises_remaining_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="@color/textTitle"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview"
+            tools:text="21" />
+
+        <TextView
+            android:id="@+id/quantity_exercises_remaining_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa"
+            android:text="@string/ejercicios_restantes"
+            android:textColor="@color/textBody"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_remaining_textview" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:translationZ="10dp"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantity_exercises_label">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/exercise_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/backgroundPrimary"
-                android:orientation="vertical">
+                android:background="@color/backgroundSecondary"
+                android:paddingHorizontal="64dp"
+                android:paddingVertical="24dp">
 
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView4"
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_help_add"
+                    style="@style/Widget.App.Switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-8897050281816485/2687938200"
-                    ads:layout_constraintEnd_toEndOf="parent"
-                    ads:layout_constraintStart_toStartOf="parent"
-                    ads:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/difficulty_exercises_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:fontFamily="@font/comfortaa"
+                    android:checked="true"
+                    android:text="Activar ayuda para sumar  "
                     android:textColor="@color/textTitle"
-                    android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/adView4"
                     app:thumbTint="@color/colorButtonNormal"
-                    app:trackTint="@color/accent1"
-                    tools:text="Challenging" />
+                    app:trackTint="@color/accent1" />
 
                 <TextView
-                    android:id="@+id/quantity_exercises_label"
+                    android:id="@+id/label_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:fontFamily="@font/comfortaa"
-                    android:text="@string/cantidad_ejercicios"
-                    android:textColor="@color/textBody"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@id/quantity_exercises_textview"
-                    app:layout_constraintTop_toBottomOf="@id/quantity_exercises_textview" />
+                    android:text="@string/sign"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/exercise_textview"
+                    app:layout_constraintTop_toTopOf="@id/exercise_textview" />
 
-                <TextView
-                    android:id="@+id/quantity_exercises_textview"
+                <EditText
+                    android:id="@+id/llevadita_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
                     android:textColor="@color/textTitle"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview"
-                    tools:text="23" />
-
-                <TextView
-                    android:id="@+id/quantity_exercises_remaining_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/comfortaa"
-                    android:textColor="@color/textTitle"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview"
-                    tools:text="21" />
-
-                <TextView
-                    android:id="@+id/quantity_exercises_remaining_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/comfortaa"
-                    android:text="@string/ejercicios_restantes"
-                    android:textColor="@color/textBody"
+                    android:textColorHint="@color/verde4"
                     android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@id/quantity_exercises_remaining_textview"
-                    app:layout_constraintTop_toBottomOf="@id/quantity_exercises_remaining_textview" />
+                    app:layout_constraintStart_toStartOf="@id/exercise_textview"
+                    app:layout_constraintTop_toBottomOf="@id/switch_help_add" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view_exercise"
+                <EditText
+                    android:id="@+id/llevadita_edittext2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="32dp"
-                    android:translationZ="10dp"
-                    app:cardCornerRadius="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/quantity_exercises_label">
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@id/llevadita_edittext"
+                    app:layout_constraintTop_toBottomOf="@id/switch_help_add"/>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/exercise_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/textTitle"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/llevadita_edittext"
+                    tools:text="469" />
+
+                <TextView
+                    android:id="@+id/exercise_textview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="@font/comfortaa"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/textTitle"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/exercise_textview"
+                    tools:text="387" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_help_addition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/label_sign"
+                    app:layout_constraintTop_toBottomOf="@id/exercise_textview2">
+
+                    <View
+                        android:id="@+id/divider_operation"
+                        android:layout_width="140dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/colorButtonPressed"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/label_sign_2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/backgroundSecondary"
-                        android:paddingHorizontal="64dp"
-                        android:paddingVertical="24dp">
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/comfortaa"
+                        android:text="@string/sing_2"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/answer_edittext_aux1"
+                        app:layout_constraintStart_toEndOf="@id/answer_edittext_aux1"
+                        app:layout_constraintTop_toTopOf="@id/answer_edittext_aux1" />
 
-                        <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:id="@+id/switch_help_add"
-                            style="@style/Widget.App.Switch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="Activar ayuda para sumar  "
-                            android:textColor="@color/textTitle"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:thumbTint="@color/colorButtonNormal"
-                            app:trackTint="@color/accent1" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="32dp"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_operation" />
 
-                        <TextView
-                            android:id="@+id/label_sign"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:fontFamily="@font/comfortaa"
-                            android:text="@string/sign"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="32sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@id/exercise_textview"
-                            app:layout_constraintTop_toTopOf="@id/exercise_textview" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux1"
+                        app:layout_constraintTop_toBottomOf="@id/divider_operation" />
 
-                        <EditText
-                            android:id="@+id/llevadita_edittext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:inputType="number"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/exercise_textview"
-                            app:layout_constraintTop_toBottomOf="@id/switch_help_add" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:letterSpacing="0.25"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux2"
+                        app:layout_constraintTop_toBottomOf="@id/divider_operation" />
 
-                        <EditText
-                            android:id="@+id/llevadita_edittext2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:inputType="number"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toEndOf="@id/llevadita_edittext"
-                            app:layout_constraintTop_toBottomOf="@id/switch_help_add" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="@id/answer_edittext_aux2"
+                        app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux2" />
 
-                        <TextView
-                            android:id="@+id/exercise_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="2dp"
-                            android:fontFamily="@font/comfortaa"
-                            android:letterSpacing="0.2"
-                            android:textColor="@color/textTitle"
-                            android:textSize="32sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@id/llevadita_edittext"
-                            tools:text="469" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux2"
+                        app:layout_constraintStart_toStartOf="@+id/answer_edittext_aux3"
+                        app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux2" />
 
-                        <TextView
-                            android:id="@+id/exercise_textview2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:fontFamily="@font/comfortaa"
-                            android:letterSpacing="0.2"
-                            android:textColor="@color/textTitle"
-                            android:textSize="32sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@id/exercise_textview"
-                            tools:text="387" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:letterSpacing="0.25"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux5"
+                        app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux3" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/constraint_help_addition"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="@+id/label_sign"
-                            app:layout_constraintTop_toBottomOf="@id/exercise_textview2">
+                    <EditText
+                        android:id="@+id/answer_edittext_aux7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="@id/answer_edittext_aux5"
+                        app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux4" />
 
-                            <View
-                                android:id="@+id/divider_operation"
-                                android:layout_width="140dp"
-                                android:layout_height="3dp"
-                                android:layout_marginTop="4dp"
-                                android:background="@color/colorButtonPressed"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux7"
+                        app:layout_constraintStart_toStartOf="@+id/answer_edittext_aux6"
+                        app:layout_constraintTop_toTopOf="@id/answer_edittext_aux7" />
 
-                            <TextView
-                                android:id="@+id/label_sign_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:fontFamily="@font/comfortaa"
-                                android:text="@string/sing_2"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="32sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="@id/answer_edittext_aux1"
-                                app:layout_constraintStart_toEndOf="@id/answer_edittext_aux1"
-                                app:layout_constraintTop_toTopOf="@id/answer_edittext_aux1" />
+                    <EditText
+                        android:id="@+id/answer_edittext_aux9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:fontFamily="@font/comfortaa"
+                        android:gravity="center"
+                        android:hint="@string/cero"
+                        android:inputType="number"
+                        android:letterSpacing="0.25"
+                        android:textColor="@color/textTitle"
+                        android:textColorHint="@color/verde4"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux8"
+                        app:layout_constraintTop_toTopOf="@id/answer_edittext_aux8" />
 
-                            <EditText
-                                android:id="@+id/answer_edittext_aux1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="32dp"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/divider_operation" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <EditText
-                                android:id="@+id/answer_edittext_aux2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux1"
-                                app:layout_constraintTop_toBottomOf="@id/divider_operation" />
+                <View
+                    android:id="@+id/divider_operation_final"
+                    android:layout_width="220dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorButtonPressed"
+                    app:layout_constraintEnd_toEndOf="@+id/label_sign"
+                    app:layout_constraintTop_toBottomOf="@id/constraint_help_addition" />
 
-                            <EditText
-                                android:id="@+id/answer_edittext_aux3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:letterSpacing="0.25"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux2"
-                                app:layout_constraintTop_toBottomOf="@id/divider_operation" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toEndOf="@id/answer_edittext_aux2"
-                                app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux2" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux2"
-                                app:layout_constraintStart_toStartOf="@+id/answer_edittext_aux3"
-                                app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux2" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:letterSpacing="0.25"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux5"
-                                app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux3" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toEndOf="@id/answer_edittext_aux5"
-                                app:layout_constraintTop_toBottomOf="@id/answer_edittext_aux4" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux8"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux7"
-                                app:layout_constraintStart_toStartOf="@+id/answer_edittext_aux6"
-                                app:layout_constraintTop_toTopOf="@id/answer_edittext_aux7" />
-
-                            <EditText
-                                android:id="@+id/answer_edittext_aux9"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="name"
-                                android:backgroundTint="@color/colorPrimaryDark"
-                                android:fontFamily="@font/comfortaa"
-                                android:gravity="center"
-                                android:hint="@string/cero"
-                                android:inputType="number"
-                                android:letterSpacing="0.25"
-                                android:textColor="@color/textTitle"
-                                android:textColorHint="@color/verde4"
-                                android:textSize="32sp"
-                                app:layout_constraintEnd_toStartOf="@id/answer_edittext_aux8"
-                                app:layout_constraintTop_toTopOf="@id/answer_edittext_aux8" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <View
-                            android:id="@+id/divider_operation_final"
-                            android:layout_width="220dp"
-                            android:layout_height="3dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@color/colorButtonPressed"
-                            app:layout_constraintEnd_toEndOf="@+id/label_sign"
-                            app:layout_constraintTop_toBottomOf="@id/constraint_help_addition" />
-
-                        <EditText
-                            android:id="@+id/answer_edittext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:imeOptions="actionNone"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="32sp"
-                            app:layout_constraintEnd_toStartOf="@id/guideline"
-                            app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
-                            tools:text="5" />
-
-                        <EditText
-                            android:id="@+id/answer_edittext2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:imeOptions="actionNone"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="32sp"
-                            app:layout_constraintEnd_toStartOf="@id/answer_edittext"
-                            app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
-                            tools:text="5" />
-
-                        <EditText
-                            android:id="@+id/answer_edittext3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:inputType="number"
-                            android:letterSpacing="0.2"
-                            android:maxLength="1"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="32sp"
-                            app:layout_constraintEnd_toStartOf="@id/answer_edittext2"
-                            app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
-                            tools:text="6" />
-
-                        <EditText
-                            android:id="@+id/answer_edittext4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:inputType="number"
-                            android:letterSpacing="0.2"
-                            android:maxLength="1"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="32sp"
-                            app:layout_constraintEnd_toStartOf="@id/answer_edittext3"
-                            app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
-                            tools:text="6" />
-
-                        <EditText
-                            android:id="@+id/answer_edittext5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:fontFamily="@font/comfortaa"
-                            android:gravity="center"
-                            android:hint="@string/cero"
-                            android:inputType="number"
-                            android:letterSpacing="0.2"
-                            android:textColor="@color/textTitle"
-                            android:textColorHint="@color/verde4"
-                            android:textSize="32sp"
-                            app:layout_constraintEnd_toStartOf="@id/answer_edittext4"
-                            app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
-                            tools:text="25" />
-
-
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.8" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/submit_button2"
+                <EditText
+                    android:id="@+id/answer_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="45dp"
-                    android:backgroundTint="@color/colorButtonPressed"
-                    android:contentDescription="@string/app_name"
-                    android:tint="@color/colorButtonPressed"
-                    android:visibility="gone"
-                    app:backgroundTint="@color/accent"
-                    app:elevation="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/card_view_exercise"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/card_view_exercise"
-                    app:rippleColor="@color/accent1"
-                    app:srcCompat="@drawable/baseline_check" />
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
+                    tools:text="5" />
+
+                <EditText
+                    android:id="@+id/answer_edittext2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toStartOf="@id/answer_edittext"
+                    app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
+                    tools:text="5" />
+
+                <EditText
+                    android:id="@+id/answer_edittext3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:letterSpacing="0.2"
+                    android:maxLength="1"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toStartOf="@id/answer_edittext2"
+                    app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
+                    tools:text="6" />
+                <EditText
+                    android:id="@+id/answer_edittext4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:letterSpacing="0.2"
+                    android:maxLength="1"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toStartOf="@id/answer_edittext3"
+                    app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
+                    tools:text="6" />
+
+                <EditText
+                    android:id="@+id/answer_edittext5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/comfortaa"
+                    android:gravity="center"
+                    android:hint="@string/cero"
+                    android:inputType="number"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/textTitle"
+                    android:textColorHint="@color/verde4"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toStartOf="@id/answer_edittext4"
+                    app:layout_constraintTop_toBottomOf="@id/divider_operation_final"
+                    tools:text="25" />
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.8" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/submit_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:backgroundTint="@color/colorButtonPressed"
+            android:contentDescription="@string/app_name"
+            android:tint="@color/colorButtonPressed"
+            android:visibility="gone"
+            app:backgroundTint="@color/accent"
+            app:elevation="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/card_view_exercise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_view_exercise"
+            app:rippleColor="@color/accent1"
+            app:srcCompat="@drawable/baseline_check" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
