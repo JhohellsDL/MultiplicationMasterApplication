@@ -39,13 +39,16 @@ class FeedbackFragment : Fragment() {
     ): View {
         binding = FragmentFeedbackBinding.inflate(inflater)
 
+        val args = FeedbackFragmentArgs.fromBundle(requireArguments())
+        Log.d("qweqwe", "llegoooo en el item ${args.sessionId}")
         val adapter: FeedbackAdapter = FeedbackAdapter()
 
         val application = requireNotNull(this.activity).applicationContext
         val feedbackViewModel: FeedbackViewModel by viewModels {
             FeedbackViewModelFactory(
                 (application as MultiplicationApplication).sessionRepository,
-                application.exerciseRepository
+                application.exerciseRepository,
+                args.sessionId
             )
         }
 
@@ -55,17 +58,13 @@ class FeedbackFragment : Fragment() {
         }
 
         feedbackViewModel.currentSession.observe(viewLifecycleOwner) {
-            binding.textDifficulty.text = Difficulty.getDifficultyFromInt(it.difficulty).toString()
-            binding.correctTextview.text = it.correctAnswers.toString()
-            binding.incorrectTextview.text = it.incorrectAnswers.toString()
-            currentTimeMillis = it.timestamp
-            val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
-            binding.timeTextview.text = dateFormat.format(Date(currentTimeMillis))
-            binding.scoreTextview.text = String.format("%d / 100 pts", it.score)
-            binding.progressBarCorrectIncorrect.progress = it.score
-            binding.numberExercisesTextview.text =
-                String.format("%d Ejercicios", it.numberOfExercises)
-            feedbackViewModel.getListExercises(it.sessionId)
+            setValues(it)
+            if (it.sessionId == args.sessionId) {
+                feedbackViewModel.getListExercises()
+            } else {
+                feedbackViewModel.getCurrentSession(args.sessionId)
+                feedbackViewModel.getListExercises(args.sessionId)
+            }
         }
 
         binding.restartButton.setOnClickListener {
@@ -76,6 +75,20 @@ class FeedbackFragment : Fragment() {
             captureAndSaveImage()
         }
         return binding.root
+    }
+
+    private fun setValues(session: SessionEntity) {
+        binding.textDifficulty.text =
+            Difficulty.getDifficultyFromInt(session.difficulty).toString()
+        binding.correctTextview.text = session.correctAnswers.toString()
+        binding.incorrectTextview.text = session.incorrectAnswers.toString()
+        currentTimeMillis = session.timestamp
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+        binding.timeTextview.text = dateFormat.format(Date(currentTimeMillis))
+        binding.scoreTextview.text = String.format("%d / 100 pts", session.score)
+        binding.progressBarCorrectIncorrect.progress = session.score
+        binding.numberExercisesTextview.text =
+            String.format("%d Ejercicios", session.numberOfExercises)
     }
 
     private fun captureAndSaveImage() {

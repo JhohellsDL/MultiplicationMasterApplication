@@ -16,7 +16,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHolder>() {
+class SessionHistoryAdapter(
+    private val onClickListener: (SessionEntity) -> Unit
+) : RecyclerView.Adapter<SessionHistoryAdapter.ViewHolder>() {
 
     var data = listOf<SessionEntity>()
 
@@ -30,14 +32,16 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
         private val scoreText: TextView = itemView.findViewById(R.id.score_session_textview)
         private val exercisesText: TextView =
             itemView.findViewById(R.id.number_exercises_session_textview)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar_session_correct_incorrect)
+        private val progressBar: ProgressBar =
+            itemView.findViewById(R.id.progress_bar_session_correct_incorrect)
         private val cardView: MaterialCardView = itemView.findViewById(R.id.card_view_detail)
         private val fondo: ConstraintLayout = itemView.findViewById(R.id.constraint_view_card)
 
         fun bind(
-            item: SessionEntity
+            item: SessionEntity,
+            onClickListener: (SessionEntity) -> Unit
         ) {
-            if (item.correctAnswers == 0 && item.incorrectAnswers == 0){
+            if (item.correctAnswers == 0 && item.incorrectAnswers == 0) {
                 cardView.strokeColor = ContextCompat.getColor(itemView.context, R.color.accent5)
                 answerCorrects.text = item.correctAnswers.toString()
                 answerIncorrects.text = item.incorrectAnswers.toString()
@@ -47,11 +51,12 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
                 exercisesText.text = String.format("%d exercises", item.numberOfExercises)
 
                 val currentTimeMillis = item.timestamp
-                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+                val dateFormat =
+                    SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
                 val dateString = dateFormat.format(Date(currentTimeMillis))
 
                 dateText.text = dateString
-            } else if (item.incorrectAnswers != 0){
+            } else if (item.incorrectAnswers != 0) {
                 cardView.strokeColor = ContextCompat.getColor(itemView.context, R.color.accent3)
                 answerCorrects.text = item.correctAnswers.toString()
                 answerIncorrects.text = item.incorrectAnswers.toString()
@@ -61,12 +66,16 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
                 exercisesText.text = String.format("%d exercises", item.numberOfExercises)
 
                 val currentTimeMillis = item.timestamp
-                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+                val dateFormat =
+                    SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
                 val dateString = dateFormat.format(Date(currentTimeMillis))
 
                 dateText.text = dateString
             } else {
-                cardView.setStrokeColor(ContextCompat.getColor(itemView.context, R.color.colorTextSecondary2))
+                cardView.strokeColor = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorTextSecondary2
+                )
                 answerCorrects.text = item.correctAnswers.toString()
                 answerIncorrects.text = item.incorrectAnswers.toString()
                 difficultyText.text = Difficulty.getDifficultyFromInt(item.difficulty).toString()
@@ -75,11 +84,14 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
                 exercisesText.text = String.format("%d exercises", item.numberOfExercises)
 
                 val currentTimeMillis = item.timestamp
-                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+                val dateFormat =
+                    SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
                 val dateString = dateFormat.format(Date(currentTimeMillis))
 
                 dateText.text = dateString
             }
+
+            itemView.setOnClickListener { onClickListener(item) }
         }
 
         companion object {
@@ -100,7 +112,7 @@ class SessionHistoryAdapter : RecyclerView.Adapter<SessionHistoryAdapter.ViewHol
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, onClickListener)
     }
 
     override fun getItemCount(): Int {

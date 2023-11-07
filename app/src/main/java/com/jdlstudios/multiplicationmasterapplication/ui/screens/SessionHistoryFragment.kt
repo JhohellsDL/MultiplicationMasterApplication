@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -18,12 +17,8 @@ import androidx.navigation.fragment.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.databinding.CardViewAlert1Binding
-import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentExercisesBinding
 import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentSessionHistoryBinding
-import com.jdlstudios.multiplicationmasterapplication.ui.adapters.FeedbackAdapter
 import com.jdlstudios.multiplicationmasterapplication.ui.adapters.SessionHistoryAdapter
-import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModel
-import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.FeedbackViewModelFactory
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModelFactory
 import com.jdlstudios.multiplicationmasterapplication.utils.Utils
@@ -54,7 +49,17 @@ class SessionHistoryFragment : Fragment() {
     ): View {
         binding = FragmentSessionHistoryBinding.inflate(inflater)
 
-        val adapter = SessionHistoryAdapter()
+        val adapter = SessionHistoryAdapter(
+            onClickListener = {
+                it.let {
+                    this.findNavController().navigate(
+                        SessionHistoryFragmentDirections.actionSessionHistoryFragmentToFeedbackFragment(
+                            it.sessionId
+                        )
+                    )
+                }
+            }
+        )
 
         val application = requireNotNull(this.activity).applicationContext
         val sessionHistoryViewModel: SessionHistoryViewModel by viewModels {
@@ -63,7 +68,7 @@ class SessionHistoryFragment : Fragment() {
             )
         }
 
-        sessionHistoryViewModel.listSession.observe(viewLifecycleOwner){
+        sessionHistoryViewModel.listSession.observe(viewLifecycleOwner) {
             adapter.data = it.reversed()
             binding.recyclerView.adapter = adapter
         }
@@ -73,7 +78,8 @@ class SessionHistoryFragment : Fragment() {
         }
 
         binding.constraintPractice.setOnClickListener {
-            it.findNavController().navigate(R.id.action_sessionHistoryFragment_to_configurationExercisesFragment)
+            it.findNavController()
+                .navigate(R.id.action_sessionHistoryFragment_to_configurationExercisesFragment)
         }
 
         binding.deleteButton.setOnClickListener {

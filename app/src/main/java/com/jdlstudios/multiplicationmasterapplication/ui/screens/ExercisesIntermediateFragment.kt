@@ -138,8 +138,11 @@ class ExercisesIntermediateFragment : Fragment() {
                     getScore(numberTotalExercise, numberCorrects)
                 )
                 exercisesViewModel.updateSession()
-                it.findNavController()
-                    .navigate(R.id.action_exercisesIntermediateFragment_to_feedbackFragment)
+                it.findNavController().navigate(
+                    ExercisesFragmentDirections.actionExercisesFragmentToFeedbackFragment(
+                        currentSession!!.sessionId
+                    )
+                )
             } else {
                 numberExercise++
                 Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")

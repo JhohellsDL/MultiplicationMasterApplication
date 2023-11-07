@@ -114,7 +114,7 @@ class ExercisesFragment : Fragment() {
             if (answer == answerUser) {
                 isCorrect = true
                 numberCorrects++
-            }else{
+            } else {
                 isCorrect = false
                 numberIncorrects++
             }
@@ -132,9 +132,17 @@ class ExercisesFragment : Fragment() {
             exercisesViewModel.insertExercise()
 
             if (numberExercise == newListExercises.size - 1) {
-                exercisesViewModel.sessionForUpdate(numberCorrects, numberIncorrects, getScore(numberTotalExercise, numberCorrects))
+                exercisesViewModel.sessionForUpdate(
+                    numberCorrects,
+                    numberIncorrects,
+                    getScore(numberTotalExercise, numberCorrects)
+                )
                 exercisesViewModel.updateSession()
-                it.findNavController().navigate(R.id.action_exercisesFragment_to_feedbackFragment)
+                it.findNavController().navigate(
+                    ExercisesFragmentDirections.actionExercisesFragmentToFeedbackFragment(
+                        currentSession!!.sessionId
+                    )
+                )
             } else {
                 numberExercise++
                 Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
@@ -161,7 +169,7 @@ class ExercisesFragment : Fragment() {
 
     private fun getScore(numberTotalExercise: Int, numberCorrects: Int): Int {
         var score: Int = 0
-        score = (100*numberCorrects)/numberTotalExercise
+        score = (100 * numberCorrects) / numberTotalExercise
         return score
     }
 
@@ -196,7 +204,7 @@ class ExercisesFragment : Fragment() {
         myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         myDialog.show()
 
-        bindingCard.buttonPositive.setOnClickListener { cardView  ->
+        bindingCard.buttonPositive.setOnClickListener {
             findNavController().navigate(R.id.action_exercisesFragment_to_configurationExercisesFragment)
             myDialog.cancel()
         }
