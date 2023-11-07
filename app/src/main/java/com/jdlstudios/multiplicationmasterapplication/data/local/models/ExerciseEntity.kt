@@ -13,7 +13,8 @@ data class ExerciseEntity(
     val operand2: Int,
     val answer: Int,
     val answerUser: Int,
-    val correct: Boolean
+    val correct: Boolean,
+    val time: Long
 ){
     fun toExercise(): Exercise{
         return Exercise(
@@ -22,7 +23,8 @@ data class ExerciseEntity(
             operand2 = operand2,
             answer = answer,
             answerUser =answerUser,
-            correct = correct
+            correct = correct,
+            time = time
         )
     }
 }

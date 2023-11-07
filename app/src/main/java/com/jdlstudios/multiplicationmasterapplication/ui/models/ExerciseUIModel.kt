@@ -8,7 +8,8 @@ data class ExerciseUIModel(
     val factor2: Int,
     val answer: Int,
     val answerUser: Int,
-    var correct: Boolean
+    var correct: Boolean,
+    val time: Long
 )
 
 fun Exercise.toUIModel() = ExerciseUIModel(
@@ -16,12 +17,14 @@ fun Exercise.toUIModel() = ExerciseUIModel(
     factor2 = operand2,
     answer = answer,
     answerUser = answerUser,
-    correct = correct
+    correct = correct,
+    time = time
 )
 fun ExerciseItem.toUIModel() = ExerciseUIModel(
     factor1 = operand1,
     factor2 = operand2,
     answer = answer,
     answerUser = answerUser,
-    correct = correct
+    correct = correct,
+    time = time
 )

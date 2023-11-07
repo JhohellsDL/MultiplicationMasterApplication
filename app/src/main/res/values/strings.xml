@@ -25,4 +25,6 @@
     <string name="sing_2">+</string>
     <string name="cancelar">Cancelar</string>
     <string name="aceptar">Aceptar</string>
+    <string name="format_exercise">%1$s X %2$s</string>
+    <string name="sesion_incompleta">SESION INCOMPLETA</string>
 </resources>

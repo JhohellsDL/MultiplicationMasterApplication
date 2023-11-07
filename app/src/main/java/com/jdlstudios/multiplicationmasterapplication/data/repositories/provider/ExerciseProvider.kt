@@ -27,7 +27,8 @@ class ExerciseProvider {
                 operand2 = f2,
                 answer = r,
                 answerUser = 0,
-                correct = false
+                correct = false,
+                time = 0
             )
         }
 

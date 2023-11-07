@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -32,7 +27,6 @@ import com.jdlstudios.multiplicationmasterapplication.databinding.FragmentConfig
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ConfigurationExercisesViewModel
 import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.ConfigurationExercisesViewModelFactory
-import com.jdlstudios.multiplicationmasterapplication.ui.viewmodels.SessionHistoryViewModel
 
 class ConfigurationExercisesFragment : Fragment() {
 
