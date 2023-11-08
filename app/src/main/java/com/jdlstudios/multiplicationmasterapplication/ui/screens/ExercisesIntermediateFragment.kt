@@ -139,7 +139,7 @@ class ExercisesIntermediateFragment : Fragment() {
                 )
                 exercisesViewModel.updateSession()
                 it.findNavController().navigate(
-                    ExercisesFragmentDirections.actionExercisesFragmentToFeedbackFragment(
+                    ExercisesIntermediateFragmentDirections.actionExercisesIntermediateFragmentToFeedbackFragment(
                         currentSession!!.sessionId
                     )
                 )

@@ -1,6 +1,5 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -58,7 +57,6 @@ class ExercisesViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _currentExercise.value?.let {
-                    Log.i("asd","Exercise Saved!! - exercise: $it")
                     exerciseRepository.saveExercise(it)
                 }
             }
@@ -68,7 +66,6 @@ class ExercisesViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _updateSession.value?.let {
-                    Log.i("asd","Session Updated!! - session: $it")
                     sessionRepository.updateSession(it)
                 }
             }

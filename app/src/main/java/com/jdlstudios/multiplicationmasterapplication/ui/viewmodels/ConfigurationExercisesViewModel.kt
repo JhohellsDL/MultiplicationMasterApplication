@@ -1,11 +1,9 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Session
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.SessionRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
@@ -25,7 +23,6 @@ class ConfigurationExercisesViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _currentSession.value?.let {
-                    Log.i("asd","Session Saved!! - session: $it")
                     sessionRepository.saveSession(it)
                 }
             }

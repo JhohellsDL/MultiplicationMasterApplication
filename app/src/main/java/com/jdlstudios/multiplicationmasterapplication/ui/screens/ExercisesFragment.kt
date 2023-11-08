@@ -100,7 +100,6 @@ class ExercisesFragment : Fragment() {
                 binding.quantityExercisesRemainingTextview.text = numberExercise.toString()
                 binding.exerciseTextview.text = currentExercise!!.operand1.toString()
                 binding.exerciseTextview2.text = currentExercise!!.operand2.toString()
-
             }
 
             Log.i("asd", "newListExercises!!!: $newListExercises")
@@ -127,15 +126,14 @@ class ExercisesFragment : Fragment() {
                 answerUser = answerUser,
                 correct = isCorrect
             )
-            Log.i("asd", "Exercise for add: ${getExerciseString(exerciseForAdd)}")
             exercisesViewModel.exerciseForAdd2(exerciseForAdd)
             exercisesViewModel.insertExercise()
 
             if (numberExercise == newListExercises.size - 1) {
                 exercisesViewModel.sessionForUpdate(
-                    numberCorrects,
-                    numberIncorrects,
-                    getScore(numberTotalExercise, numberCorrects)
+                    correctAnswers = numberCorrects,
+                    incorrectAnswers = numberIncorrects,
+                    score = getScore(numberTotalExercise, numberCorrects)
                 )
                 exercisesViewModel.updateSession()
                 it.findNavController().navigate(
@@ -145,7 +143,6 @@ class ExercisesFragment : Fragment() {
                 )
             } else {
                 numberExercise++
-                Log.i("asd", "Exercise for add: $numberExercise - ${newListExercises.size}")
             }
 
             currentExercise = newListExercises[numberExercise]
