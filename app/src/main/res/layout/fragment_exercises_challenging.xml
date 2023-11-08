@@ -24,6 +24,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Challenging" />
 
+        <Button
+            android:id="@+id/button_idea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="idea"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <TextView
             android:id="@+id/quantity_exercises_label"
             android:layout_width="wrap_content"
