@@ -20,7 +20,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
@@ -54,7 +53,6 @@ class ExercisesFragment : Fragment() {
     private var isCorrect: Boolean = false
 
     private var rewardedAd: RewardedAd? = null
-    private final var TAG = "MainActivity"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,13 +85,11 @@ class ExercisesFragment : Fragment() {
             adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    adError.toString().let { Log.d(TAG, it) }
                     rewardedAd = null
                 }
 
                 override fun onAdLoaded(ad: RewardedAd) {
                     binding.buttonIdea.isVisible = true
-                    Log.d(TAG, "Ad was loaded.")
                     rewardedAd = ad
                     val options = ServerSideVerificationOptions.Builder()
                         .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
@@ -105,13 +101,11 @@ class ExercisesFragment : Fragment() {
         binding.buttonIdea.setOnClickListener {
 
             rewardedAd?.let { ad ->
-                ad.show(requireContext() as Activity, OnUserEarnedRewardListener { rewardItem ->
+                ad.show(requireContext() as Activity) { rewardItem ->
                     val rewardAmount = rewardItem.amount
                     val rewardType = rewardItem.type
                     getHelpAfterVideo()
-                })
-            } ?: run {
-                Log.d(TAG, "The rewarded ad wasn't ready yet.")
+                }
             }
 
         }
@@ -211,27 +205,8 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun getScore(numberTotalExercise: Int, numberCorrects: Int): Int {
-        var score: Int = 0
-        score = (100 * numberCorrects) / numberTotalExercise
-        return score
+        return (100 * numberCorrects) / numberTotalExercise
     }
-
-    fun getExerciseString(exercise: Exercise): String {
-        val sessionId = exercise.sessionId ?: "null"
-        val operand1 = exercise.operand1 ?: 0
-        val operand2 = exercise.operand2 ?: 0
-        val answer = exercise.answer ?: 0
-        val answerUser = exercise.answerUser ?: 0
-        val correct = exercise.correct ?: false
-
-        return "sessionId: $sessionId, " +
-                "operand1: $operand1, " +
-                "operand2: $operand2, " +
-                "answer: $answer, " +
-                "answerUser: $answerUser, " +
-                "correct: $correct"
-    }
-
 
     private fun isAnswerValid(answer: String): Boolean {
         return answer.isNotBlank() && answer.toIntOrNull() != null
