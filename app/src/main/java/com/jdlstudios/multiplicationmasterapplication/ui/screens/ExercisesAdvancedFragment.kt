@@ -66,9 +66,11 @@ class ExercisesAdvancedFragment : Fragment() {
 
         var adRequest2 = AdRequest.Builder().build()
 
+        // Test: ca-app-pub-3940256099942544/1033173712
+        // Prod: ca-app-pub-8897050281816485/8901992769
         InterstitialAd.load(
             requireContext(),
-            "ca-app-pub-8897050281816485/8901992769",
+            "ca-app-pub-3940256099942544/1033173712",
             adRequest2,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
@@ -80,12 +82,13 @@ class ExercisesAdvancedFragment : Fragment() {
                 }
             })
 
-        //ca-app-pub-3940256099942544/5224354917
+        // Test: ca-app-pub-3940256099942544/5224354917
+        // Prod: ca-app-pub-8897050281816485/5129035187
         binding.buttonIdea.isVisible = false
         val adRequestReward = AdRequest.Builder().build()
         RewardedAd.load(
             requireContext(),
-            "ca-app-pub-8897050281816485/5129035187",
+            "ca-app-pub-3940256099942544/5224354917",
             adRequestReward,
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {

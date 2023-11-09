@@ -12,12 +12,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Test: ca-app-pub-3940256099942544/6300978111 -->
+        <!-- Prod: ca-app-pub-8897050281816485/6580734141 -->
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-8897050281816485/6580734141"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
             ads:layout_constraintEnd_toEndOf="parent"
             ads:layout_constraintStart_toStartOf="parent"
             ads:layout_constraintTop_toTopOf="parent" />
