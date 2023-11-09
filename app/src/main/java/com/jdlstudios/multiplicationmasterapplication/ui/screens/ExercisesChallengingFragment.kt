@@ -59,7 +59,7 @@ class ExercisesChallengingFragment : Fragment() {
     ): View {
         binding = FragmentExercisesChallengingBinding.inflate(inflater)
 
-        binding.buttonIdea.isEnabled = false
+        binding.buttonIdea.isVisible = false
         val adRequest = AdRequest.Builder().build()
         RewardedAd.load(
             requireContext(),
@@ -72,7 +72,7 @@ class ExercisesChallengingFragment : Fragment() {
                 }
 
                 override fun onAdLoaded(ad: RewardedAd) {
-                    binding.buttonIdea.isEnabled = true
+                    binding.buttonIdea.isVisible = true
                     Log.d(TAG, "Ad was loaded.")
                     rewardedAd = ad
                     val options = ServerSideVerificationOptions.Builder()
@@ -368,6 +368,6 @@ class ExercisesChallengingFragment : Fragment() {
         val op1: Int = currentExercise!!.operand1
         val op2: Int = currentExercise!!.operand2
         calculateMultiplicationAndDecompose(op1, op2)
-        binding.buttonIdea.isEnabled = false
+        binding.buttonIdea.isVisible = false
     }
 }
