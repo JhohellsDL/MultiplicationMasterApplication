@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(), OnBackPressedDispatcherOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
+        // Para los anuncios con codigos de test
 
         // Se obtiene el controlador de márgenes de ventana
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
