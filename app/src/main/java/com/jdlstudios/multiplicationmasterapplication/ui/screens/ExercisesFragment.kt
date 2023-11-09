@@ -93,7 +93,7 @@ class ExercisesFragment : Fragment() {
         // Prod: ca-app-pub-8897050281816485/6389162456
         InterstitialAd.load(
             requireContext(),
-            "ca-app-pub-3940256099942544/1033173712",
+            "ca-app-pub-8897050281816485/6389162456",
             adRequest2,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
@@ -111,7 +111,7 @@ class ExercisesFragment : Fragment() {
         val adRequestReward = AdRequest.Builder().build()
         RewardedAd.load(
             requireContext(),
-            "ca-app-pub-3940256099942544/5224354917",
+            "ca-app-pub-8897050281816485/5129035187",
             adRequestReward,
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
