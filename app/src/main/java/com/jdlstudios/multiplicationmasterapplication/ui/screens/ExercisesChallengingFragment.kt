@@ -80,11 +80,13 @@ class ExercisesChallengingFragment : Fragment() {
                     mInterstitialAd = interstitialAd
                 }
             })
+
+        //ca-app-pub-3940256099942544/5224354917
         binding.buttonIdea.isVisible = false
         val adRequestReward = AdRequest.Builder().build()
         RewardedAd.load(
             requireContext(),
-            "ca-app-pub-3940256099942544/5224354917",
+            "ca-app-pub-8897050281816485/5129035187",
             adRequestReward,
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
