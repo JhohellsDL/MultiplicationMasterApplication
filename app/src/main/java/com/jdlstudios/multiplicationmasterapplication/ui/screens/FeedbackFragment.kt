@@ -1,6 +1,7 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,11 +10,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
@@ -28,6 +29,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class FeedbackFragment : Fragment() {
 
@@ -39,13 +41,15 @@ class FeedbackFragment : Fragment() {
     ): View {
         binding = FragmentFeedbackBinding.inflate(inflater)
 
-        val adapter: FeedbackAdapter = FeedbackAdapter()
+        val args = FeedbackFragmentArgs.fromBundle(requireArguments())
+        val adapter = FeedbackAdapter()
 
         val application = requireNotNull(this.activity).applicationContext
         val feedbackViewModel: FeedbackViewModel by viewModels {
             FeedbackViewModelFactory(
                 (application as MultiplicationApplication).sessionRepository,
-                application.exerciseRepository
+                application.exerciseRepository,
+                args.sessionId
             )
         }
 
@@ -55,17 +59,13 @@ class FeedbackFragment : Fragment() {
         }
 
         feedbackViewModel.currentSession.observe(viewLifecycleOwner) {
-            binding.textDifficulty.text = Difficulty.getDifficultyFromInt(it.difficulty).toString()
-            binding.correctTextview.text = it.correctAnswers.toString()
-            binding.incorrectTextview.text = it.incorrectAnswers.toString()
-            currentTimeMillis = it.timestamp
-            val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
-            binding.timeTextview.text = dateFormat.format(Date(currentTimeMillis))
-            binding.scoreTextview.text = String.format("%d / 100 pts", it.score)
-            binding.progressBarCorrectIncorrect.progress = it.score
-            binding.numberExercisesTextview.text =
-                String.format("%d Ejercicios", it.numberOfExercises)
-            feedbackViewModel.getListExercises(it.sessionId)
+            setValues(it)
+            if (it.sessionId == args.sessionId) {
+                feedbackViewModel.getListExercises()
+            } else {
+                feedbackViewModel.getCurrentSession(args.sessionId)
+                feedbackViewModel.getListExercises(args.sessionId)
+            }
         }
 
         binding.restartButton.setOnClickListener {
@@ -78,14 +78,28 @@ class FeedbackFragment : Fragment() {
         return binding.root
     }
 
+    private fun setValues(session: SessionEntity) {
+        binding.textDifficulty.text =
+            Difficulty.getDifficultyFromInt(session.difficulty).toString()
+        binding.correctTextview.text = session.correctAnswers.toString()
+        binding.incorrectTextview.text = session.incorrectAnswers.toString()
+        currentTimeMillis = session.timestamp
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+        binding.timeTextview.text = dateFormat.format(Date(currentTimeMillis))
+        binding.scoreTextview.text = String.format("%d / 100 pts", session.score)
+        binding.progressBarCorrectIncorrect.progress = session.score
+        binding.numberExercisesTextview.text =
+            String.format("%d Ejercicios", session.numberOfExercises)
+    }
+
     private fun captureAndSaveImage() {
-        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss")
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
         val message =
             "Esta es mi practica a la fecha: ${dateFormat.format(Date(currentTimeMillis))}"
 
         val screenshot = captureFragmentScreen(requireParentFragment())
         val imagePath = screenshot?.let {
-            saveImage(it)
+            saveImage(it, requireContext())
         }
         if (imagePath != null) {
             shareImage(imagePath, message)
@@ -95,25 +109,36 @@ class FeedbackFragment : Fragment() {
     }
 
     private fun captureFragmentScreen(fragment: Fragment): Bitmap? {
+        val fragmentView = fragment.view
 
-        val view = fragment.view
+        if (fragmentView != null && fragmentView.width > 0 && fragmentView.height > 0) {
+            try {
+                val bitmap =
+                    fragmentView.let {
+                        Bitmap.createBitmap(
+                            it.width,
+                            fragmentView.height,
+                            Bitmap.Config.ARGB_8888
+                        )
+                    }
 
-        val bitmap =
-            view?.let { Bitmap.createBitmap(it.width, view.height - 180, Bitmap.Config.ARGB_8888) }
-
-        val canvas = bitmap?.let { Canvas(it) }
-        if (view != null) {
-            view.draw(canvas)
+                val canvas = bitmap?.let { Canvas(it) }
+                fragmentView.draw(canvas)
+                return bitmap
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         } else {
             Log.i("asd", "-- no hay captura dentro!")
         }
-
-        return bitmap
+        return null
     }
 
-    private fun saveImage(image: Bitmap): Uri? {
+    private fun saveImage(image: Bitmap, context: Context): Uri? {
+        val imageFileName = "screenshot_${System.currentTimeMillis()}.jpg"
+
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "screenshot.jpg")
+            put(MediaStore.MediaColumns.DISPLAY_NAME, imageFileName)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             put(
                 MediaStore.MediaColumns.RELATIVE_PATH,
@@ -121,7 +146,7 @@ class FeedbackFragment : Fragment() {
             )
         }
 
-        val resolver = requireContext().contentResolver
+        val resolver = context.contentResolver
         var outputStream: OutputStream? = null
         val imageUri: Uri?
         try {
@@ -130,7 +155,6 @@ class FeedbackFragment : Fragment() {
             imageUri?.let {
                 outputStream = resolver.openOutputStream(it)
                 image.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
-                outputStream?.flush()
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -151,19 +175,12 @@ class FeedbackFragment : Fragment() {
         intent.type = "image/jpeg"
         intent.putExtra(Intent.EXTRA_STREAM, imagePath)
         intent.putExtra(Intent.EXTRA_TEXT, message)
+
+        intent.putExtra(Intent.EXTRA_TITLE, "Compartir imagen")
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
         startActivity(Intent.createChooser(intent, "Compartir imagen"))
     }
 
-    fun sessionToString(session: SessionEntity): String {
-        return """
-        |Session Details:
-        |Difficulty: ${session.sessionId}
-        |Difficulty: ${session.difficulty}
-        |Number of Exercises: ${session.numberOfExercises}
-        |Correct Answers: ${session.correctAnswers}
-        |Incorrect Answers: ${session.incorrectAnswers}
-        |Score: ${session.score}
-        |Timestamp: ${session.timestamp}
-    """.trimMargin()
-    }
 }

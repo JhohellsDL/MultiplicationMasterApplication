@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jdlstudios.multiplicationmasterapplication.R
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
 import com.jdlstudios.multiplicationmasterapplication.ui.screens.FeedbackFragment
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class FeedbackAdapter(): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
+class FeedbackAdapter() : RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
 
     var data = listOf<Exercise>()
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val answerUser: TextView = itemView.findViewById(R.id.text_answer_user)
         val answer: TextView = itemView.findViewById(R.id.text_answer)
         val isCorrect: TextView = itemView.findViewById(R.id.text_correct)
@@ -26,17 +29,22 @@ class FeedbackAdapter(): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
 
         fun bind(
             item: Exercise
-        ){
+        ) {
             answerUser.text = item.answerUser.toString()
             answer.text = item.answer.toString()
-            if (item.correct){
-                isCorrect.text = "Correcto"
+
+            val currentTimeMillis = item.time
+            val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+            val dateString = dateFormat.format(Date(currentTimeMillis))
+
+            if (item.correct) {
+                isCorrect.text = dateString
                 image.setImageResource(R.drawable.baseline_good_green)
-            }else{
-                isCorrect.text = "Incorrecto"
+            } else {
+                isCorrect.text = dateString
                 image.setImageResource(R.drawable.baseline_bad_red)
             }
-            exercise.text = "${item.operand1} X ${item.operand2}"
+            exercise.text = String.format("%s X %s", item.operand1, item.operand2)
         }
 
         companion object {
@@ -47,6 +55,7 @@ class FeedbackAdapter(): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
             }
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }

@@ -1,26 +1,17 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jdlstudios.multiplicationmasterapplication.data.local.dao.ExerciseDao
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
-import com.jdlstudios.multiplicationmasterapplication.data.models.Session
-import com.jdlstudios.multiplicationmasterapplication.data.models.toRepository
-import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfaces.ExerciseRepository
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.ExerciseRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.data.repositories.interfacesimpl.SessionRepositoryImpl
 import com.jdlstudios.multiplicationmasterapplication.domain.models.Difficulty
-import com.jdlstudios.multiplicationmasterapplication.domain.models.toDomain
 import com.jdlstudios.multiplicationmasterapplication.domain.usecases.GenerateListExercisesUseCase
 import com.jdlstudios.multiplicationmasterapplication.ui.models.ExerciseUIModel
-import com.jdlstudios.multiplicationmasterapplication.ui.models.toUIModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -66,7 +57,6 @@ class ExercisesViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _currentExercise.value?.let {
-                    Log.i("asd","Exercise Saved!! - exercise: $it")
                     exerciseRepository.saveExercise(it)
                 }
             }
@@ -76,7 +66,6 @@ class ExercisesViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _updateSession.value?.let {
-                    Log.i("asd","Session Updated!! - session: $it")
                     sessionRepository.updateSession(it)
                 }
             }
@@ -101,7 +90,8 @@ class ExercisesViewModel(
             operand2 = exercise.operand2,
             answer = exercise.answer,
             answerUser = exercise.answerUser,
-            correct = exercise.correct
+            correct = exercise.correct,
+            time = exercise.time
         )
     }
 
@@ -111,7 +101,8 @@ class ExercisesViewModel(
         operand2: Int,
         answer: Int,
         answerUser: Int,
-        correct: Boolean
+        correct: Boolean,
+        time: Long
     ) {
         _currentExercise.value = Exercise(
             sessionId = sessionId,
@@ -119,7 +110,8 @@ class ExercisesViewModel(
             operand2 = operand2,
             answer = answer,
             answerUser = answerUser,
-            correct = correct
+            correct = correct,
+            time = time
         )
     }
 

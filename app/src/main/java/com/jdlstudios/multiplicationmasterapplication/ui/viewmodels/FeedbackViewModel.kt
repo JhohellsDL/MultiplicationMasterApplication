@@ -1,6 +1,5 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class FeedbackViewModel(
     private val sessionRepository: SessionRepositoryImpl,
-    private val exerciseRepository: ExerciseRepositoryImpl
+    private val exerciseRepository: ExerciseRepositoryImpl,
+    private val userId: Long
 ) : ViewModel() {
 
     private val _currentSession = MutableLiveData<SessionEntity>()
@@ -30,10 +30,28 @@ class FeedbackViewModel(
         getCurrentSession()
     }
 
-    fun getListExercises(sessionId: Long){
+    fun getListExercises(sessionId: Long) {
         viewModelScope.launch {
             exerciseRepository.getExercisesBySessionId(sessionId).let {
                 _listExercises.value = it
+            }
+        }
+    }
+
+    fun getListExercises() {
+        viewModelScope.launch {
+            _currentSession.value?.let { session ->
+                exerciseRepository.getExercisesBySessionId(session.sessionId).let {
+                    _listExercises.value = it
+                }
+            }
+        }
+    }
+
+    fun getCurrentSession(sessionId: Long) {
+        viewModelScope.launch {
+            sessionRepository.getSessionBySessionId(sessionId).let {
+                _currentSession.value = it.toSessionEntity()
             }
         }
     }

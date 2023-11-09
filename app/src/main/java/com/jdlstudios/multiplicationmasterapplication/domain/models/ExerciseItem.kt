@@ -10,18 +10,9 @@ data class ExerciseItem(
     val operand2: Int,
     val answer: Int,
     val answerUser: Int,
-    val correct: Boolean
+    val correct: Boolean,
+    val time: Long
 )
-
-fun ExerciseEntity.toDomain() =
-    ExerciseItem(
-        sessionId,
-        operand1,
-        operand2,
-        answer,
-        answerUser,
-        correct
-    )
 
 fun Exercise.toDomain() =
     ExerciseItem(
@@ -30,7 +21,8 @@ fun Exercise.toDomain() =
         operand2,
         answer,
         answerUser,
-        correct
+        correct,
+        time
     )
 
 fun ExerciseUIModel.toDomain() =
@@ -40,5 +32,6 @@ fun ExerciseUIModel.toDomain() =
         operand2 = factor2,
         answer,
         answerUser,
-        correct
+        correct,
+        time
     )

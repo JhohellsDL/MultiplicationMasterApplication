@@ -69,6 +69,17 @@
                     app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview"
                     tools:text="23" />
 
+                <ImageButton
+                    android:id="@+id/button_idea"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/image_idea"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/difficulty_exercises_textview" />
+
                 <TextView
                     android:id="@+id/quantity_exercises_remaining_textview"
                     android:layout_width="wrap_content"

@@ -9,7 +9,8 @@ data class Exercise(
     val operand2: Int,
     val answer: Int,
     val answerUser: Int,
-    val correct: Boolean
+    val correct: Boolean,
+    val time: Long = System.currentTimeMillis()
 ) {
     fun toExerciseEntity(): ExerciseEntity {
         return ExerciseEntity(
@@ -18,18 +19,8 @@ data class Exercise(
             operand2 = operand2,
             answer = answer,
             answerUser = answerUser,
-            correct = correct
+            correct = correct,
+            time = time
         )
     }
-}
-
-fun ExerciseItem.toRepository(): Exercise {
-    return Exercise(
-        sessionId = sessionId,
-        operand1 = operand1,
-        operand2 = operand2,
-        answer = answer,
-        answerUser = answerUser,
-        correct = correct
-    )
 }
