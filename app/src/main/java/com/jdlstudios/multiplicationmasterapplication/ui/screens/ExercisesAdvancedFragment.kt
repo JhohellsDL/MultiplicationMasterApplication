@@ -1,5 +1,6 @@
 package com.jdlstudios.multiplicationmasterapplication.ui.screens
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -13,6 +14,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
 import com.jdlstudios.multiplicationmasterapplication.MultiplicationApplication
 import com.jdlstudios.multiplicationmasterapplication.data.local.models.SessionEntity
 import com.jdlstudios.multiplicationmasterapplication.data.models.Exercise
@@ -39,11 +46,51 @@ class ExercisesAdvancedFragment : Fragment() {
     private var answerUser: Int = 0
     private var isCorrect: Boolean = false
 
+    private var rewardedAd: RewardedAd? = null
+    private final var TAG = "MainActivity"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentExercisesAdvancedBinding.inflate(inflater)
+
+        binding.buttonIdea.isEnabled = false
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(
+            requireContext(),
+            "ca-app-pub-3940256099942544/5224354917",
+            adRequest,
+            object : RewardedAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    adError.toString().let { Log.d(TAG, it) }
+                    rewardedAd = null
+                }
+
+                override fun onAdLoaded(ad: RewardedAd) {
+                    binding.buttonIdea.isEnabled = true
+                    Log.d(TAG, "Ad was loaded.")
+                    rewardedAd = ad
+                    val options = ServerSideVerificationOptions.Builder()
+                        .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
+                        .build()
+                    rewardedAd!!.setServerSideVerificationOptions(options)
+                }
+            })
+
+        binding.buttonIdea.setOnClickListener {
+
+            rewardedAd?.let { ad ->
+                ad.show(requireContext() as Activity, OnUserEarnedRewardListener { rewardItem ->
+                    val rewardAmount = rewardItem.amount
+                    val rewardType = rewardItem.type
+                    getHelpAfterVideo()
+                })
+            } ?: run {
+                Log.d(TAG, "The rewarded ad wasn't ready yet.")
+            }
+
+        }
 
         val application = requireNotNull(this.activity).applicationContext
         val exercisesViewModel: ExercisesViewModel by viewModels {
@@ -142,7 +189,7 @@ class ExercisesAdvancedFragment : Fragment() {
                 )
                 exercisesViewModel.updateSession()
                 it.findNavController().navigate(
-                    ExercisesChallengingFragmentDirections.actionExercisesChallengingFragmentToFeedbackFragment(
+                    ExercisesAdvancedFragmentDirections.actionExercisesAdvancedFragmentToFeedbackFragment(
                         currentSession!!.sessionId
                     )
                 )
@@ -292,5 +339,56 @@ class ExercisesAdvancedFragment : Fragment() {
                 })
             }
         }
+    }
+
+    private fun calculateMultiplicationAndDecompose(op1: Int, op2: Int) {
+        val unitOp2 = op2 % 10
+        val tenOp2 = (op2 / 10) % 10
+        val hundredOp2 = op2 / 100
+
+        val result1 = op1 * unitOp2
+        val result2 = op1 * tenOp2
+        val result3 = op1 * hundredOp2
+
+        displayDecomposedValuesFirst(result1)
+        displayDecomposedValuesSecond(result2)
+        displayDecomposedValuesThird(result3)
+    }
+
+    private fun displayDecomposedValuesThird(number: Int) {
+        val unit = number % 10
+        val ten = (number / 10) % 10
+        val hundred = number / 100
+
+        binding.answerEdittextAux7.setText(unit.toString())
+        binding.answerEdittextAux8.setText(ten.toString())
+        binding.answerEdittextAux9.setText(hundred.toString())
+    }
+
+    private fun displayDecomposedValuesFirst(number: Int) {
+        val unit = number % 10
+        val ten = (number / 10) % 10
+        val hundred = number / 100
+
+        binding.answerEdittextAux1.setText(unit.toString())
+        binding.answerEdittextAux2.setText(ten.toString())
+        binding.answerEdittextAux3.setText(hundred.toString())
+    }
+
+    private fun displayDecomposedValuesSecond(number: Int) {
+        val unit = number % 10
+        val ten = (number / 10) % 10
+        val hundred = number / 100
+
+        binding.answerEdittextAux4.setText(unit.toString())
+        binding.answerEdittextAux5.setText(ten.toString())
+        binding.answerEdittextAux6.setText(hundred.toString())
+    }
+
+    private fun getHelpAfterVideo() {
+        val op1: Int = currentExercise!!.operand1
+        val op2: Int = currentExercise!!.operand2
+        calculateMultiplicationAndDecompose(op1, op2)
+        binding.buttonIdea.isEnabled = false
     }
 }

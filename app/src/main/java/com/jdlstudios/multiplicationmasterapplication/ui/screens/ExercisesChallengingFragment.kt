@@ -59,22 +59,28 @@ class ExercisesChallengingFragment : Fragment() {
     ): View {
         binding = FragmentExercisesChallengingBinding.inflate(inflater)
 
-        var adRequest = AdRequest.Builder().build()
-        RewardedAd.load(requireContext(),"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                adError.toString().let { Log.d(TAG, it) }
-                rewardedAd = null
-            }
+        binding.buttonIdea.isEnabled = false
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(
+            requireContext(),
+            "ca-app-pub-3940256099942544/5224354917",
+            adRequest,
+            object : RewardedAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    adError.toString().let { Log.d(TAG, it) }
+                    rewardedAd = null
+                }
 
-            override fun onAdLoaded(ad: RewardedAd) {
-                Log.d(TAG, "Ad was loaded.")
-                rewardedAd = ad
-                val options = ServerSideVerificationOptions.Builder()
-                    .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
-                    .build()
-                rewardedAd!!.setServerSideVerificationOptions(options)
-            }
-        })
+                override fun onAdLoaded(ad: RewardedAd) {
+                    binding.buttonIdea.isEnabled = true
+                    Log.d(TAG, "Ad was loaded.")
+                    rewardedAd = ad
+                    val options = ServerSideVerificationOptions.Builder()
+                        .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
+                        .build()
+                    rewardedAd!!.setServerSideVerificationOptions(options)
+                }
+            })
 
         val application = requireNotNull(this.activity).applicationContext
         val exercisesViewModel: ExercisesViewModel by viewModels {
@@ -85,16 +91,17 @@ class ExercisesChallengingFragment : Fragment() {
         }
 
         binding.buttonIdea.setOnClickListener {
+
             rewardedAd?.let { ad ->
                 ad.show(requireContext() as Activity, OnUserEarnedRewardListener { rewardItem ->
-                    // Handle the reward.
                     val rewardAmount = rewardItem.amount
                     val rewardType = rewardItem.type
-                    Log.d(TAG, "User earned the reward.")
+                    getHelpAfterVideo()
                 })
             } ?: run {
                 Log.d(TAG, "The rewarded ad wasn't ready yet.")
             }
+
         }
 
         binding.switchHelpAdd.setOnCheckedChangeListener { _, isChecked ->
@@ -324,5 +331,43 @@ class ExercisesChallengingFragment : Fragment() {
                 })
             }
         }
+    }
+
+    private fun calculateMultiplicationAndDecompose(op1: Int, op2: Int) {
+        val unitOp2 = op2 % 10
+        val tenOp2 = (op2 / 10) % 10
+
+        val result1 = op1 * unitOp2
+        val result2 = op1 * tenOp2
+
+        displayDecomposedValuesFirst(result1)
+        displayDecomposedValuesSecond(result2)
+    }
+
+    private fun displayDecomposedValuesFirst(number: Int) {
+        val unit = number % 10
+        val ten = (number / 10) % 10
+        val hundred = number / 100
+
+        binding.answerEdittextAux1.setText(unit.toString())
+        binding.answerEdittextAux2.setText(ten.toString())
+        binding.answerEdittextAux3.setText(hundred.toString())
+    }
+
+    private fun displayDecomposedValuesSecond(number: Int) {
+        val unit = number % 10
+        val ten = (number / 10) % 10
+        val hundred = number / 100
+
+        binding.answerEdittextAux4.setText(unit.toString())
+        binding.answerEdittextAux5.setText(ten.toString())
+        binding.answerEdittextAux6.setText(hundred.toString())
+    }
+
+    private fun getHelpAfterVideo() {
+        val op1: Int = currentExercise!!.operand1
+        val op2: Int = currentExercise!!.operand2
+        calculateMultiplicationAndDecompose(op1, op2)
+        binding.buttonIdea.isEnabled = false
     }
 }
